@@ -7,7 +7,7 @@ main{max-width:1180px;margin:auto;padding:22px}header{background:var(--navy);col
 .pitch-map{position:relative;width:100%;max-width:285px;aspect-ratio:1.5;margin:10px auto 0;background:linear-gradient(90deg,#e8f2ed 0 20%,#f8f9ee 20% 80%,#e8f2ed 80%);border:1px solid #8eaaa1;border-radius:9px;cursor:crosshair}.zone{position:absolute;left:20%;width:60%;top:18%;height:64%;border:2px solid var(--green);pointer-events:none}.dot{position:absolute;width:15px;height:15px;background:#e88642;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 1px 3px #345;pointer-events:none}.help{font-size:13px;color:#536b62;margin:7px 0}.coordinates{font-variant-numeric:tabular-nums;font-weight:700}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.metric{background:#f1f7ee;border:1px solid #cbdcce;border-radius:9px;padding:14px}.metric b{display:block;font-size:clamp(19px,3vw,29px);font-variant-numeric:tabular-nums}.metric small{color:#45645a}.positive{color:#216246}.negative{color:#a24134}.breakdown{width:100%;border-collapse:collapse}th,td{padding:8px;text-align:left;border-bottom:1px solid var(--line)}th{background:#f3f7f3}.bar{height:8px;background:#dfebe2;border-radius:5px;overflow:hidden}.bar span{display:block;height:100%;background:#327c60}.warn{color:#914631}a{color:#bfe495}details{margin-top:10px}summary{cursor:pointer;font-weight:700}footer{font-size:13px;color:#50645d;margin:15px 0}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}main{padding:10px}header{padding:18px}}
 .field-map{position:relative;width:100%;max-width:300px;height:220px;margin:10px auto;background:radial-gradient(ellipse at 50% 103%,#a1c999,#49815e);border-radius:50% 50% 8px 8px;overflow:hidden;cursor:crosshair;border:1px solid #8eaaa1}.field-map .plate{position:absolute;bottom:2px;left:47%;font-size:11px;color:#fff}.landing-dot{position:absolute;width:14px;height:14px;border:2px solid white;border-radius:50%;background:#ef843b;transform:translate(-50%,-50%);box-shadow:0 1px 4px #234;pointer-events:none}.field-map .arc{position:absolute;top:12%;left:8%;height:175%;width:84%;border:1px solid #dce7ce;border-radius:50%;pointer-events:none}
-.pitch-map{max-width:340px;aspect-ratio:300/230;background:#32564e;border-radius:11px;overflow:hidden;touch-action:none}.pitch-map svg,.field-map svg{width:100%;height:100%;display:block;pointer-events:none}.pitch-map .dot{z-index:2;background:#ff9a48;width:17px;height:17px}.field-map{max-width:360px;height:auto;aspect-ratio:300/240;border-radius:10px;background:#285c49;touch-action:none}.field-map .landing-dot{z-index:2;background:#ff9a48;width:17px;height:17px}</style></head><body><main><header><h1>CPBL 單球事件 SP 試算器</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
+.pitch-map{max-width:340px;aspect-ratio:300/230;background:#32564e;border-radius:11px;overflow:hidden;touch-action:none}.pitch-map svg,.field-map svg{width:100%;height:100%;display:block;pointer-events:none}.pitch-map .dot{z-index:2;background:#ff9a48;width:17px;height:17px}.field-map{max-width:360px;height:auto;aspect-ratio:300/240;border-radius:10px;background:#285c49;touch-action:none}.field-map .landing-dot{z-index:2;background:#ff9a48;width:17px;height:17px}.trajectory-panel{margin-top:13px;border:1px solid #d5dfd9;border-radius:9px;overflow:hidden;background:#edf4ef}.trajectory-panel svg{display:block;width:100%;height:145px}.trajectory-panel p{margin:4px 10px 9px}</style></head><body><main><header><h1>CPBL 單球事件 SP 試算器</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
 <div class="layout"><div>
 <section class="card"><h2>① 投球前情境</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
 <section class="card"><h2>② 這球投在哪裡？</h2><p class="help">點擊好球帶示意區，或調整座標。x 是左右位置、z 是高度，單位為公尺。</p><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
@@ -39,6 +39,8 @@ main{max-width:1180px;margin:auto;padding:22px}header{background:var(--navy);col
 <path d="M38 96 Q150 -17 262 96" fill="none" stroke="#d9e8d4" stroke-width="1" stroke-dasharray="4 4"/>
 <text x="35" y="80" fill="white" font-size="11">左外野</text><text x="131" y="28" fill="white" font-size="11">中外野</text><text x="229" y="80" fill="white" font-size="11">右外野</text>
 <text x="132" y="237" fill="white" font-size="11">本壘</text>
+<path id="flightplan" d="M150 220 L150 188" fill="none" stroke="#ffd375" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4"/>
+<circle id="flightmid" cx="150" cy="202" r="4" fill="#fff0ad" stroke="#35574b" stroke-width="1"/>
 </svg><span id="landingdot" class="landing-dot"></span></div>
 <label for="bearing">落點方向（度）</label><input id="bearing" type="range" min="-55" max="55" step="1" value="0">
 <label for="distance">距本壘（公尺）</label><input id="distance" type="range" min="0" max="150" step="1" value="25"><p id="landinglabel" class="help"></p>
@@ -49,7 +51,14 @@ main{max-width:1180px;margin:auto;padding:22px}header{background:var(--navy);col
 <option value="popup">高飛球（50° 以上）</option></select>
 <p class="help">不確定仰角時，直接選擊球型態；選擇後可再微調仰角。飛球與高飛球目前共用模型的 25° 以上資料組。</p><label for="angle">擊球仰角（度）</label><input id="angle" type="range" min="-60" max="80" step="1" value="4">
 <label for="speed">擊球初速（km/h）</label><input id="speed" type="range" min="60" max="180" step="1" value="130">
-<p id="balltype" class="help"></p><label for="fielder">防守球員</label><select id="fielder"></select><p class="help">球員選擇指定記分對象；目前缺個人站位與接球機會資料，選不同球員不會改變機率。擊球仰角、初速與落點會改變聯盟機率。</p></section>
+<p id="balltype" class="help"></p><div class="trajectory-panel" role="img" aria-label="擊球軌跡側視示意圖">
+<svg viewBox="0 0 320 145" preserveAspectRatio="none" aria-hidden="true">
+<rect width="320" height="145" rx="9" fill="#edf4ef"/>
+<path d="M16 119H306" stroke="#658976" stroke-width="2"/>
+<path id="trajectorypath" d="M18 118 Q160 92 302 118" fill="none" stroke="#df792f" stroke-width="3" stroke-linecap="round"/>
+<circle cx="18" cy="118" r="4" fill="#2b6348"/><circle id="trajectoryball" cx="160" cy="101" r="6" fill="#ffab4d" stroke="white" stroke-width="2"/>
+<text x="16" y="137" font-size="11" fill="#34564a">本壘</text><text id="trajectorydistance" x="306" y="137" text-anchor="end" font-size="11" fill="#34564a">落點 25 m</text>
+</svg><p id="trajectorynote" class="help"></p></div><label for="fielder">防守球員</label><select id="fielder"></select><p class="help">球員選擇指定記分對象；目前缺個人站位與接球機會資料，選不同球員不會改變機率。擊球仰角、初速與落點會改變聯盟機率。</p></section>
 <section class="card"><h2>④ 實際擊球結果</h2><label for="result">事件類型</label><select id="result"><option value="1B" selected>一壘安打</option><option value="2B">二壘安打</option><option value="3B">三壘安打</option><option value="HR">全壘打</option><option value="CONTACT_OUT">擊球出局</option><option value="K">三振</option><option value="WALK">保送／觸身球</option><option value="OTHER">失誤／野手選擇等</option></select><p class="help">此版以打席結束的事件為單位；一般壞球、好球尚未單獨計入。</p></section></div>
 <div><section class="card"><h2>單一事件的 SP</h2><div class="metrics"><div class="metric"><small>情境事件 SP · 進攻方</small><b id="sp">—</b><small>事件價值 − 進壘位置下的預期價值</small></div><div class="metric"><small>事件 RE24 · 進攻方</small><b id="re24">—</b><small>事件得分及壘況擺盪</small></div><div class="metric"><small>該位置安打率</small><b id="hit">—</b><small>形成場內擊球後的安打率</small></div></div><p id="explanation"></p><p id="warning" class="warn"></p></section>
 <section class="card"><h2>角色 SP（估計）</h2><div class="metrics role-metrics">
@@ -89,7 +98,19 @@ const kind=angle<10?'ground':angle<25?'line':angle<50?'fly':'popup';$('ballkind'
 $('balltype').textContent=`目前判定：${ballType} · 仰角 ${angle}° · 初速 ${speed} km/h`;
 
 const rad=bearing*Math.PI/180,rr=Math.min(1,distance/150);
-$('landingdot').style.left=((150+190*rr*Math.sin(rad))/3)+'%';$('landingdot').style.top=((220-190*rr*Math.cos(rad))/2.4)+'%';
+const landX=150+190*rr*Math.sin(rad),landY=220-190*rr*Math.cos(rad);
+$('landingdot').style.left=(landX/3)+'%';$('landingdot').style.top=(landY/2.4)+'%';
+$('flightplan').setAttribute('d',`M150 220 L${landX.toFixed(1)} ${landY.toFixed(1)}`);
+$('flightmid').setAttribute('cx',((150+landX)/2).toFixed(1));$('flightmid').setAttribute('cy',((220+landY)/2).toFixed(1));
+const air=Math.max(0,Math.sin(Math.max(0,angle)*Math.PI/180));
+const lift=kind==='ground'?Math.min(7,2+air*12):Math.min(92,(12+air*75)*(speed/130));
+const controlY=118-2*lift;
+$('trajectorypath').setAttribute('d',`M18 118 Q160 ${controlY.toFixed(1)} 302 118`);
+$('trajectoryball').setAttribute('cx','160');$('trajectoryball').setAttribute('cy',(118-lift).toFixed(1));
+$('trajectorydistance').textContent=`落點 ${distance} m`;
+$('trajectorynote').textContent=`${ballType}的俯視路徑與側視高度示意。軌跡依輸入繪製，沒有逐幀追蹤或空氣阻力校準；距離與仰角可獨立設定。`;
+const hasContact=!['K','WALK'].includes(key);$('flightplan').style.display=hasContact?'':'none';$('flightmid').style.display=hasContact?'':'none';$('trajectorypath').style.display=hasContact?'':'none';$('trajectoryball').style.display=hasContact?'':'none';
+
 $('landinglabel').textContent=`${bearing}°、${distance} m；同組樣本 ${spot.n} 球，出局機率 ${(spot.p_out*100).toFixed(1)}%`;
 const relevant=['CONTACT_OUT','1B','2B','3B'].includes(key);
 const safeBranches=['1B','2B','3B'].map(c=>branch[model.classes.indexOf(c)]);
