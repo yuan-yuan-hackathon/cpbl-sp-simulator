@@ -7,13 +7,39 @@ main{max-width:1180px;margin:auto;padding:22px}header{background:var(--navy);col
 .pitch-map{position:relative;width:100%;max-width:285px;aspect-ratio:1.5;margin:10px auto 0;background:linear-gradient(90deg,#e8f2ed 0 20%,#f8f9ee 20% 80%,#e8f2ed 80%);border:1px solid #8eaaa1;border-radius:9px;cursor:crosshair}.zone{position:absolute;left:20%;width:60%;top:18%;height:64%;border:2px solid var(--green);pointer-events:none}.dot{position:absolute;width:15px;height:15px;background:#e88642;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 1px 3px #345;pointer-events:none}.help{font-size:13px;color:#536b62;margin:7px 0}.coordinates{font-variant-numeric:tabular-nums;font-weight:700}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.metric{background:#f1f7ee;border:1px solid #cbdcce;border-radius:9px;padding:14px}.metric b{display:block;font-size:clamp(19px,3vw,29px);font-variant-numeric:tabular-nums}.metric small{color:#45645a}.positive{color:#216246}.negative{color:#a24134}.breakdown{width:100%;border-collapse:collapse}th,td{padding:8px;text-align:left;border-bottom:1px solid var(--line)}th{background:#f3f7f3}.bar{height:8px;background:#dfebe2;border-radius:5px;overflow:hidden}.bar span{display:block;height:100%;background:#327c60}.warn{color:#914631}a{color:#bfe495}details{margin-top:10px}summary{cursor:pointer;font-weight:700}footer{font-size:13px;color:#50645d;margin:15px 0}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}main{padding:10px}header{padding:18px}}
 .field-map{position:relative;width:100%;max-width:300px;height:220px;margin:10px auto;background:radial-gradient(ellipse at 50% 103%,#a1c999,#49815e);border-radius:50% 50% 8px 8px;overflow:hidden;cursor:crosshair;border:1px solid #8eaaa1}.field-map .plate{position:absolute;bottom:2px;left:47%;font-size:11px;color:#fff}.landing-dot{position:absolute;width:14px;height:14px;border:2px solid white;border-radius:50%;background:#ef843b;transform:translate(-50%,-50%);box-shadow:0 1px 4px #234;pointer-events:none}.field-map .arc{position:absolute;top:12%;left:8%;height:175%;width:84%;border:1px solid #dce7ce;border-radius:50%;pointer-events:none}
-</style></head><body><main><header><h1>CPBL 單球事件 SP 試算器</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
+.pitch-map{max-width:340px;aspect-ratio:300/230;background:#32564e;border-radius:11px;overflow:hidden;touch-action:none}.pitch-map svg,.field-map svg{width:100%;height:100%;display:block;pointer-events:none}.pitch-map .dot{z-index:2;background:#ff9a48;width:17px;height:17px}.field-map{max-width:360px;height:auto;aspect-ratio:300/240;border-radius:10px;background:#285c49;touch-action:none}.field-map .landing-dot{z-index:2;background:#ff9a48;width:17px;height:17px}</style></head><body><main><header><h1>CPBL 單球事件 SP 試算器</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
 <div class="layout"><div>
 <section class="card"><h2>① 投球前情境</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
-<section class="card"><h2>② 這球投在哪裡？</h2><p class="help">點擊好球帶示意區，或調整座標。x 是左右位置、z 是高度，單位為公尺。</p><div id="map" class="pitch-map" role="img" aria-label="可點選的進壘位置圖"><div class="zone"></div><span id="dot" class="dot"></span></div><div class="coordinates" id="coords"></div><label for="x">左右 x（公尺）</label><input id="x" type="range" min="-0.8" max="0.8" step="0.025" value="0"><label for="z">高度 z（公尺）</label><input id="z" type="range" min="0" max="1.6" step="0.025" value="0.8"><p class="help" id="sample"></p></section>
+<section class="card"><h2>② 這球投在哪裡？</h2><p class="help">點擊好球帶示意區，或調整座標。x 是左右位置、z 是高度，單位為公尺。</p><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
+<svg viewBox="0 0 300 230" preserveAspectRatio="none" aria-hidden="true">
+<defs><linearGradient id="pitchbg" x2="0" y2="1"><stop stop-color="#233f3e"/><stop offset="1" stop-color="#496d65"/></linearGradient></defs>
+<rect width="300" height="230" fill="url(#pitchbg)"/><path d="M0 195 Q150 175 300 195 L300 230 H0Z" fill="#b28460"/>
+<path d="M78 85H222 M78 129H222 M78 173H222" stroke="#d3ded8" stroke-width="1" stroke-dasharray="3 4" opacity=".35"/>
+<rect x="109" y="79" width="82" height="86" rx="2" fill="#e5f4de" fill-opacity=".13" stroke="#f2f5e4" stroke-width="2"/>
+<path d="M136.3 79V165 M163.7 79V165 M109 107.7H191 M109 136.3H191" stroke="#d6eacb" stroke-width="1" opacity=".65"/>
+<path d="M127 208 L173 208 L167 221 L150 228 L133 221Z" fill="#f8f5e6" stroke="#dbd1bb" stroke-width="2"/>
+<text x="150" y="21" text-anchor="middle" fill="#e5f4e8" font-size="12">投手視角 · 進壘平面</text>
+<text x="10" y="122" fill="#e8f2eb" font-size="11">左</text><text x="278" y="122" fill="#e8f2eb" font-size="11">右</text>
+</svg><span id="dot" class="dot"></span></div><div class="coordinates" id="coords"></div><label for="x">左右 x（公尺）</label><input id="x" type="range" min="-0.8" max="0.8" step="0.025" value="0"><label for="z">高度 z（公尺）</label><input id="z" type="range" min="0" max="1.6" step="0.025" value="0.8"><p class="help" id="sample"></p></section>
 <section class="card"><h2>③ 擊球落點與防守者</h2>
 <p class="help">點選球場示意圖，或輸入落點方向及本壘距離。正方向偏右外野；這是 Trackman 落點的近似示意。</p>
-<div id="fieldmap" class="field-map" role="img" aria-label="可點選的擊球落點示意圖"><span class="foul left"></span><span class="foul right"></span><span class="arc"></span><span id="landingdot" class="landing-dot"></span><span class="plate">本壘</span></div>
+<div id="fieldmap" class="field-map" role="img" aria-label="從本壘往外野看的可點選擊球落點圖">
+<svg viewBox="0 0 300 240" preserveAspectRatio="none" aria-hidden="true">
+<defs><radialGradient id="grass" cx="50%" cy="85%" r="100%"><stop stop-color="#6aa477"/><stop offset="1" stop-color="#285c49"/></radialGradient></defs>
+<rect width="300" height="240" fill="#214a40"/>
+<path d="M150 220 L5 75 Q150 -78 295 75Z" fill="url(#grass)" stroke="#e8e5d1" stroke-width="2"/>
+<path d="M150 220 L15 85 M150 220 L285 85" stroke="#fff7da" stroke-width="2"/>
+<path d="M150 220 L111 181 L150 142 L189 181Z" fill="#b9855d" stroke="#e6cfab" stroke-width="1"/>
+<path d="M150 220 L189 181 L150 142 L111 181Z" fill="none" stroke="#eee8d4" stroke-width="1"/>
+<circle cx="150" cy="181" r="6" fill="#b9855d" stroke="#e6cfab"/>
+<rect x="185" y="177" width="7" height="7" transform="rotate(45 188.5 180.5)" fill="white"/>
+<rect x="146.5" y="138.5" width="7" height="7" transform="rotate(45 150 142)" fill="white"/>
+<rect x="107" y="177" width="7" height="7" transform="rotate(45 110.5 180.5)" fill="white"/>
+<path d="M144 216H156L153 223H147Z" fill="white"/>
+<path d="M38 96 Q150 -17 262 96" fill="none" stroke="#d9e8d4" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="35" y="80" fill="white" font-size="11">左外野</text><text x="131" y="28" fill="white" font-size="11">中外野</text><text x="229" y="80" fill="white" font-size="11">右外野</text>
+<text x="132" y="237" fill="white" font-size="11">本壘</text>
+</svg><span id="landingdot" class="landing-dot"></span></div>
 <label for="bearing">落點方向（度）</label><input id="bearing" type="range" min="-55" max="55" step="1" value="0">
 <label for="distance">距本壘（公尺）</label><input id="distance" type="range" min="0" max="150" step="1" value="65"><p id="landinglabel" class="help"></p>
 <label for="fielder">防守球員</label><select id="fielder"></select><p class="help">球員選擇指定記分對象；目前缺個人站位與接球機會資料，選不同球員不會改變機率。</p></section>
@@ -50,7 +76,7 @@ const sp=value-exp;const bearing=+$('bearing').value,distance=+$('distance').val
 const bi=bucket(landing.bearing_edges,bearing),di=bucket(landing.distance_edges,distance);
 const spot=bi<0||di<0?{p_out:landing.prior,n:0}:landing.cells[di][bi];
 const rad=bearing*Math.PI/180,rr=Math.min(1,distance/150);
-$('landingdot').style.left=(50+45*rr*Math.sin(rad))+'%';$('landingdot').style.top=(96-86*rr*Math.cos(rad))+'%';
+$('landingdot').style.left=((150+190*rr*Math.sin(rad))/3)+'%';$('landingdot').style.top=((220-190*rr*Math.cos(rad))/2.4)+'%';
 $('landinglabel').textContent=`${bearing}°、${distance} m；附近樣本 ${spot.n} 球，接殺率 ${(spot.p_out*100).toFixed(1)}%`;
 const relevant=['CONTACT_OUT','1B','2B','3B'].includes(key);
 const safeBranches=['1B','2B','3B'].map(c=>branch[model.classes.indexOf(c)]);
@@ -70,5 +96,5 @@ $('warning').textContent=next.id===b.id?'下一棒與本棒為同一人，請調
 const box=$('probabilities');box.replaceChildren(...model.classes.map((c,i)=>{const row=document.createElement('div');row.textContent=names[c]+'：'+(q[i]*100).toFixed(1)+'%';const bar=document.createElement('div');bar.className='bar';const fill=document.createElement('span');fill.style.width=(q[i]*100)+'%';bar.append(fill);row.append(bar);return row}));}
 const teams=[...new Set(model.players.batter.map(p=>p.team).filter(Boolean))];$('team').append(new Option('全部球隊',''),...teams.map(t=>new Option(t,t)));$('team').value=teams.find(t=>t==='味全龍')||teams[0];
 for(const id of ['team','batter','pitcher','next','outs','base1','base2','base3','x','z','bearing','distance','fielder','result'])$(id).addEventListener(['x','z','bearing','distance'].includes(id)?'input':'change',id==='team'?teamChange:render);
-$('fieldmap').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width-.5,dy=1-(e.clientY-r.top)/r.height; $('bearing').value=Math.max(-55,Math.min(55,Math.atan2(dx,dy)*180/Math.PI));$('distance').value=Math.max(0,Math.min(150,Math.hypot(dx*2,dy)*150));render()});$('map').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();$('x').value=(-.8+1.6*(e.clientX-r.left)/r.width).toFixed(2);$('z').value=(1.6-1.6*(e.clientY-r.top)/r.height).toFixed(2);render()});teamChange();
+$('fieldmap').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width*300-150,dy=220-(e.clientY-r.top)/r.height*240; $('bearing').value=Math.max(-55,Math.min(55,Math.atan2(dx,dy)*180/Math.PI));$('distance').value=Math.max(0,Math.min(150,Math.hypot(dx,dy)/190*150));render()});$('map').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();$('x').value=(-.8+1.6*(e.clientX-r.left)/r.width).toFixed(2);$('z').value=(1.6-1.6*(e.clientY-r.top)/r.height).toFixed(2);render()});teamChange();
 </script></body></html>
