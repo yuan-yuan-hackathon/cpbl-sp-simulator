@@ -46,7 +46,7 @@ const q=locationProbs(probs(b,p,s),loc.hit_rate),nextValue=continuation(next,p,m
 const branch=model.classes.map((_,j)=>model.runs[s][j]+model.transitions[s][j].reduce((a,t,i)=>a+t*(nextValue[i]||0),0));
 const exp=q.reduce((a,t,j)=>a+t*branch[j],0),value=branch[k],actual=model.runs[s][k],after=value-actual;
 const reEvent=actual+model.transitions[s][k].reduce((a,t,i)=>a+t*(model.states[i]||0),0)-model.states[s];
-const bearing=+$('bearing').value,distance=+$('distance').value;
+const sp=value-exp;const bearing=+$('bearing').value,distance=+$('distance').value;
 const bi=bucket(landing.bearing_edges,bearing),di=bucket(landing.distance_edges,distance);
 const spot=bi<0||di<0?{p_out:landing.prior,n:0}:landing.cells[di][bi];
 const rad=bearing*Math.PI/180,rr=Math.min(1,distance/150);
@@ -63,7 +63,7 @@ $('fieldersp').textContent=relevant?fielderSp.toFixed(4):'—';$('fieldersp').cl
 $('pout').textContent=relevant?(spot.p_out*100).toFixed(1)+'%':'—';
 const fName=batters[$('fielder').value]?.name||'未指定';
 $('rolewarning').textContent=relevant?`${fName}：野手 SP =（是否出局 − 該落點接殺率）× 安打與出局的得分價值差。投手 SP = −進攻方事件 SP − 野手 SP，是剩餘歸屬，不是經驗證的個人投球貢獻。${spot.n<30?'此落點樣本不足 30 球，主要依聯盟先驗。':''}`:'此結果沒有可辨識的接球機會，野手 SP 不計；投手欄顯示防守方事件 SP 的剩餘歸屬。';
-const sp=value-exp;showNumber('sp',sp);$('sp').className=sp>=0?'positive':'negative';showNumber('re24',reEvent);$('re24').className=reEvent>=0?'positive':'negative';$('hit').textContent=(loc.hit_rate*100).toFixed(1)+'%';
+showNumber('sp',sp);$('sp').className=sp>=0?'positive':'negative';showNumber('re24',reEvent);$('re24').className=reEvent>=0?'positive':'negative';$('hit').textContent=(loc.hit_rate*100).toFixed(1)+'%';
 showNumber('before',model.states[s]);showNumber('runs',actual);showNumber('after',after);showNumber('expected',exp);
 $('explanation').textContent=`${b.name} 對 ${p.name}，${outs} 出局、壘包狀態 ${bases}；發生「${names[key]}」時，考量下一棒 ${next.name} 的事件後價值是 ${value.toFixed(4)} runs，相對這個位置的事前預期 ${exp.toFixed(4)} runs，進攻方 SP 為 ${sp>=0?'+':''}${sp.toFixed(4)} runs。`;
 $('warning').textContent=next.id===b.id?'下一棒與本棒為同一人，請調整打序。':loc.n<30?'這個位置的歷史樣本很少，安打率主要由聯盟先驗決定。':'';
