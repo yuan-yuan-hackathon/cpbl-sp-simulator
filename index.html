@@ -22,7 +22,7 @@ const hitKeys=['1B','2B','3B','HR'];const hitI=model.classes.map((c,i)=>hitKeys.
 function probs(b,p,s){const raw=[...b.rates,...p.rates].map((v,i)=>(v-model.center[i])/model.scale[i]);const score=model.coef.map((w,k)=>model.allowed[s][k]?model.bias[k]+w[s]+raw.reduce((a,v,i)=>a+v*w[24+i],0):-Infinity);const top=Math.max(...score),mass=score.map(x=>Math.exp(x-top)),sum=mass.reduce((a,b)=>a+b,0);return mass.map(x=>x/sum)}
 function continuation(b,p,after){const v=[...after,0];return model.states.map((_,s)=>probs(b,p,s).reduce((sum,q,k)=>sum+q*(model.runs[s][k]+model.transitions[s][k].reduce((a,t,j)=>a+t*v[j],0)),0))}
 function bucket(edges,v){for(let i=0;i<edges.length-1;i++)if(v>=edges[i]&&(v<edges[i+1]||i===edges.length-2&&v<=edges[i+1]))return i;return -1}
-function location(x,z){const xi=bucket(grid.x_edges,x),zi=bucket(grid.z_edges,z);return xi<0||zi<0?{hit_rate:grid.prior,n:0}:grid.cells[zi][xi]}
+function locationCell(x,z){const xi=bucket(grid.x_edges,x),zi=bucket(grid.z_edges,z);return xi<0||zi<0?{hit_rate:grid.prior,n:0}:grid.cells[zi][xi]}
 function locationProbs(q,r){const adjusted=[...q],h=hitI.reduce((a,i)=>a+q[i],0),out=q[outI],mix=h+out;
  if(mix<=0)return adjusted;const odds=(r/(1-r))/(grid.prior/(1-grid.prior));const fraction=(h*odds)/(h*odds+out);hitI.forEach(i=>adjusted[i]=h?mix*fraction*q[i]/h:0);adjusted[outI]=mix*(1-fraction);return adjusted}
 function fill(id,arr){const sel=$(id),previous=sel.value;sel.replaceChildren(...arr.sort((a,b)=>a.name.localeCompare(b.name,'zh-Hant')).map(p=>new Option(p.name+' · '+p.n+' PA',p.id)));if(arr.some(p=>p.id===previous))sel.value=previous}
@@ -30,7 +30,7 @@ function teamChange(){const t=$('team').value,b=model.players.batter.filter(p=>!
 function showNumber(id,v){$(id).textContent=v.toFixed(4)}
 function render(){const b=batters[$('batter').value],p=pitchers[$('pitcher').value],next=batters[$('next').value];if(!b||!p||!next)return;
 const outs=+$('outs').value,bases=($('base1').checked?1:0)+($('base2').checked?2:0)+($('base3').checked?4:0),s=8*outs+bases;
-const x=+$('x').value,z=+$('z').value,loc=location(x,z);$('coords').textContent=`x = ${x.toFixed(2)}, z = ${z.toFixed(2)}`;$('dot').style.left=((x+2)/4*100)+'%';$('dot').style.top=((5-z)/4.7*100)+'%';$('sample').textContent=`此位置網格：${loc.n} 球；以 80 球聯盟先驗平滑。`;
+const x=+$('x').value,z=+$('z').value,loc=locationCell(x,z);$('coords').textContent=`x = ${x.toFixed(2)}, z = ${z.toFixed(2)}`;$('dot').style.left=((x+2)/4*100)+'%';$('dot').style.top=((5-z)/4.7*100)+'%';$('sample').textContent=`此位置網格：${loc.n} 球；以 80 球聯盟先驗平滑。`;
 const q=locationProbs(probs(b,p,s),loc.hit_rate),nextValue=continuation(next,p,model.states),key=$('result').value,k=model.classes.indexOf(key);
 const branch=model.classes.map((_,j)=>model.runs[s][j]+model.transitions[s][j].reduce((a,t,i)=>a+t*nextValue[i],0));
 const exp=q.reduce((a,t,j)=>a+t*branch[j],0),value=branch[k],actual=model.runs[s][k],after=value-actual;
