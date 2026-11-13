@@ -180,7 +180,7 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 <section class="card"><h2>④ 這次打席的結果</h2><label for="result">事件類型</label><select id="result"><option value="1B" selected>一壘安打</option><option value="2B">二壘安打</option><option value="3B">三壘安打</option><option value="HR">全壘打</option><option value="CONTACT_OUT">擊球出局</option><option value="K">三振</option><option value="WALK">保送／觸身球</option><option value="OTHER">失誤／野手選擇等</option></select><p class="help">這裡只計算打席結束時的結果，例如安打、出局或保送；打席中間的好球和壞球還沒有另外計分。</p></section></div>
 <div><section class="card"><h2>這次打席的 SP</h2><div class="metrics"><div class="metric"><small>情境事件 SP · 進攻方</small><b id="sp">—</b></div><div class="metric"><small>事件 RE24 · 進攻方</small><b id="re24">—</b><small>這次打席得到的分數，加上之後得分機會的變化</small></div><div class="metric"><small>這個位置的球被打進場內後，形成安打的機率</small><b id="hit">—</b></div></div><p id="explanation"></p><p id="warning" class="warn"></p></section>
 <section class="card"><h2>投手和野手的SP</h2><div class="metrics role-metrics">
-<div class="metric"><small>投手 SP · 防守方剩餘歸屬</small><b id="pitchersp">—</b></div>
+<div class="metric"><small>投手SP</small><b id="pitchersp">—</b></div>
 <div class="metric"><small>選定野手 SP · 防守方</small><b id="fieldersp">—</b></div>
 <div class="metric"><small>同類擊球出局率 · 歷史平滑</small><b id="pout">—</b></div></div>
 <p id="rolewarning" class="help"></p></section><section class="card"><h2>得分拆解</h2><table class="breakdown"><tbody><tr><th>投球前 RE24</th><td id="before"></td></tr><tr><th>事件立即得分（平均）</th><td id="runs"></td></tr><tr><th>事件後的下一棒與續局價值</th><td id="after"></td></tr><tr><th>該位置下事前預期得分</th><td id="expected"></td></tr></tbody></table><p class="help">事件結果相同時，進壘位置透過事前安打機率影響「超出預期」的 SP；RE24 只依壘況及出局數變化。投手防守方的總得分擺盪方向相反，此處不宣稱已精確拆出投手、打者與野手個別責任。</p></section>
