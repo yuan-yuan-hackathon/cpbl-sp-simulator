@@ -79,7 +79,7 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 </style></head><body><main><header><h1>CPBL單球事件SP計算器</h1><p>這一球，得分機會變了多少？</p></header>
 <div class="layout"><div>
 <section class="card"><h2>① 投球前的場上狀況</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
-<section class="card"><h2>② 這球投在哪裡？</h2><p class="help">在圖上點選這球進入本壘的位置，或拖動下面的滑桿。左右位置和高度都以公尺表示。</p><div class="stance-switch" role="group" aria-label="打擊站位"><label><input type="radio" id="stance-right" name="stance" checked> 右打</label><label><input type="radio" id="stance-left" name="stance"> 左打</label></div><p class="help">左右打切換只改變圖中的站位；目前資料沒有打者慣用打擊側，SP 計算不受影響。</p><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
+<section class="card"><h2>② 這球投在哪裡？</h2><p class="help">在圖上點選這球進入本壘的位置，或拖動下面的滑桿。左右位置和高度都以公尺表示。</p><div class="stance-switch" role="group" aria-label="打擊站位"><label><input type="radio" id="stance-right" name="stance" checked> 右打</label><label><input type="radio" id="stance-left" name="stance"> 左打</label></div><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
 <svg viewBox="0 0 300 230" preserveAspectRatio="none" aria-hidden="true">
 
 <defs>
