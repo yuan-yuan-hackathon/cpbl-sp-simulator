@@ -71,6 +71,9 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 .dot:before,.dot:after,.landing-dot:before,.landing-dot:after{content:"";position:absolute;top:3px;bottom:3px;width:5px;border:1.5px dashed #bb3531;border-top:0;border-bottom:0;border-radius:50%;pointer-events:none}
 .dot:before,.landing-dot:before{left:3px;transform:rotate(-15deg)}
 .dot:after,.landing-dot:after{right:3px;transform:rotate(-15deg)}
+.dot,.landing-dot{width:34px;height:34px;border:0;background:transparent;box-shadow:none;filter:drop-shadow(0 2px 3px #142126b0)}
+.dot:before,.dot:after,.landing-dot:before,.landing-dot:after{content:none}
+.dot svg,.landing-dot svg{display:block;width:100%;height:100%}
 @media(max-width:900px){main{padding:0 12px 20px}header{margin:0 -12px 12px;padding:22px 17px}.layout{grid-template-columns:1fr;gap:12px}.layout>div:first-child{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.layout>div:first-child>.card{border-right:1px solid var(--line)}}
 @media(max-width:620px){.layout>div:first-child{display:block}.metrics,#probabilities{grid-template-columns:1fr}.metric{border-left:0;border-top:1px solid var(--line);padding:10px 0}.metric:first-child{border-top:0}.layout>div:last-child>.card:first-child .metrics{grid-template-columns:1fr 1fr}.layout>div:last-child>.card:first-child .metric:first-child{grid-column:1/-1;grid-row:auto;border-right:0;border-bottom:1px solid #516a70}.layout>div:last-child>.card:first-child .metric:nth-child(2){padding-left:0;border-right:1px solid #516a70;border-bottom:0}.layout>div:last-child>.card:first-child .metric:last-child{padding-left:14px}.layout>div:last-child>.card{padding:15px}.layout>div:last-child>.card:first-child{padding:18px}}
 </style></head><body><main><header><h1>這一球，得分機會變了多少？</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
@@ -121,7 +124,7 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 </g>
 <text x="150" y="19" text-anchor="middle" fill="#f6f1e6" font-size="11" font-family="Arial, sans-serif" letter-spacing=".7">投手視角 · 本壘進球位置</text>
 <text x="7" y="122" fill="#fcf5e3" font-size="11">左</text><text x="279" y="122" fill="#fcf5e3" font-size="11">右</text>
-</svg><span id="dot" class="dot"></span></div><div class="coordinates" id="coords"></div><label for="x">左右 x（公尺）</label><input id="x" type="range" min="-0.8" max="0.8" step="0.025" value="0"><label for="z">高度 z（公尺）</label><input id="z" type="range" min="0" max="1.6" step="0.025" value="0.8"><p class="help" id="sample"></p></section>
+</svg><span id="dot" class="dot"><svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><defs><radialGradient id="pitchMarkerBall" cx="35%" cy="28%" r="72%"><stop stop-color="#fffefa"/><stop offset=".68" stop-color="#f5f1e6"/><stop offset="1" stop-color="#d6cdbb"/></radialGradient><clipPath id="pitchMarkerBall-clip"><circle cx="24" cy="24" r="21"/></clipPath></defs><circle cx="24" cy="24" r="21" fill="url(#pitchMarkerBall)" stroke="#c6baa6" stroke-width="1.2"/><g clip-path="url(#pitchMarkerBall-clip)" fill="none" stroke="#b63b35" stroke-linecap="round"><path d="M9 8 C23 16 23 32 9 40 M39 8 C25 16 25 32 39 40" stroke-width="1.8"/><path d="M10 12 l6 -2 M13 16 l6 -1 M15 20 l6 -.3 M16 24 l6 1 M15 28 l6 2 M12 32 l6 2.5 M9 36 l6 3 M38 12 l-6 -2 M35 16 l-6 -1 M33 20 l-6 -.3 M32 24 l-6 1 M33 28 l-6 2 M36 32 l-6 2.5 M39 36 l-6 3" stroke-width="1.1"/></g><path d="M15 8 Q22 4 28 6" stroke="#fff" stroke-width="1.2" opacity=".85" fill="none"/></svg></span></div><div class="coordinates" id="coords"></div><label for="x">左右 x（公尺）</label><input id="x" type="range" min="-0.8" max="0.8" step="0.025" value="0"><label for="z">高度 z（公尺）</label><input id="z" type="range" min="0" max="1.6" step="0.025" value="0.8"><p class="help" id="sample"></p></section>
 <section class="card"><h2>③ 擊球落點與防守者</h2>
 <p class="help">點選球場示意圖，或輸入落點方向及本壘距離。正方向偏右外野；這是 Trackman 落點的近似示意。</p>
 <div id="fieldmap" class="field-map" role="img" aria-label="從本壘往外野看的可點選擊球落點圖">
@@ -162,7 +165,7 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 </g>
 <path id="flightplan" d="M150 220 L150 188" fill="none" stroke="#fff4d6" stroke-width="2.3" stroke-linecap="round" stroke-dasharray="4 4"/>
 <circle id="flightmid" cx="150" cy="202" r="4" fill="url(#ballSeams)" stroke="#273d36" stroke-width="1"/>
-</svg><span id="landingdot" class="landing-dot"></span></div>
+</svg><span id="landingdot" class="landing-dot"><svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><defs><radialGradient id="landingMarkerBall" cx="35%" cy="28%" r="72%"><stop stop-color="#fffefa"/><stop offset=".68" stop-color="#f5f1e6"/><stop offset="1" stop-color="#d6cdbb"/></radialGradient><clipPath id="landingMarkerBall-clip"><circle cx="24" cy="24" r="21"/></clipPath></defs><circle cx="24" cy="24" r="21" fill="url(#landingMarkerBall)" stroke="#c6baa6" stroke-width="1.2"/><g clip-path="url(#landingMarkerBall-clip)" fill="none" stroke="#b63b35" stroke-linecap="round"><path d="M9 8 C23 16 23 32 9 40 M39 8 C25 16 25 32 39 40" stroke-width="1.8"/><path d="M10 12 l6 -2 M13 16 l6 -1 M15 20 l6 -.3 M16 24 l6 1 M15 28 l6 2 M12 32 l6 2.5 M9 36 l6 3 M38 12 l-6 -2 M35 16 l-6 -1 M33 20 l-6 -.3 M32 24 l-6 1 M33 28 l-6 2 M36 32 l-6 2.5 M39 36 l-6 3" stroke-width="1.1"/></g><path d="M15 8 Q22 4 28 6" stroke="#fff" stroke-width="1.2" opacity=".85" fill="none"/></svg></span></div>
 <label for="bearing">落點方向（度）</label><input id="bearing" type="range" min="-55" max="55" step="1" value="0">
 <label for="distance">距本壘（公尺）</label><input id="distance" type="range" min="0" max="150" step="1" value="25"><p id="landinglabel" class="help"></p>
 <label for="ballkind">擊球型態</label><select id="ballkind">
@@ -177,7 +180,7 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 <rect width="320" height="145" fill="#18222c"/>
 <path d="M16 119H306" stroke="#91a4b6" stroke-width="2"/>
 <path id="trajectorypath" d="M18 118 Q160 92 302 118" fill="none" stroke="#fb923c" stroke-width="3" stroke-linecap="round"/>
-<circle cx="18" cy="118" r="4" fill="#cbd5e1"/><circle id="trajectoryball" cx="160" cy="101" r="7" fill="#f8f5e9" stroke="#c4483d" stroke-width="1.5" stroke-dasharray="3 2"/>
+<circle cx="18" cy="118" r="4" fill="#cbd5e1"/><circle id="trajectoryball" cx="160" cy="101" r="7" fill="#f8f5e9" stroke="#c6baa6" stroke-width="1.3"/><path d="M155 96 Q160 101 155 106 M165 96 Q160 101 165 106" stroke="#b63b35" stroke-width="1.2" fill="none" pointer-events="none"/>
 <text x="16" y="137" font-size="11" fill="#e2e8f0">本壘</text><text id="trajectorydistance" x="306" y="137" text-anchor="end" font-size="11" fill="#e2e8f0">落點 25 m</text>
 </svg><p id="trajectorynote" class="help"></p></div><label for="fielder">防守球員</label><select id="fielder"></select><p class="help">球員選擇指定記分對象；目前缺個人站位與接球機會資料，選不同球員不會改變機率。擊球仰角、初速與落點會改變聯盟機率。</p></section>
 <section class="card"><h2>④ 實際擊球結果</h2><label for="result">事件類型</label><select id="result"><option value="1B" selected>一壘安打</option><option value="2B">二壘安打</option><option value="3B">三壘安打</option><option value="HR">全壘打</option><option value="CONTACT_OUT">擊球出局</option><option value="K">三振</option><option value="WALK">保送／觸身球</option><option value="OTHER">失誤／野手選擇等</option></select><p class="help">此版以打席結束的事件為單位；一般壞球、好球尚未單獨計入。</p></section></div>
