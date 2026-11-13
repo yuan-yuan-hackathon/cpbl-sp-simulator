@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CPBL SP 提案｜第 3、5、6 頁</title>
+<style>
+  :root{--ink:#17292f;--paper:#f7f6f1;--rule:#c9c9bd;--red:#a5452b;--muted:#58686b}
+  *{box-sizing:border-box}
+  body{margin:0;background:#202a2e;color:var(--ink);font:16px/1.5 "Noto Sans TC","Microsoft JhengHei",sans-serif}
+  .controls{position:fixed;z-index:5;right:18px;bottom:15px;display:flex;align-items:center;gap:8px;background:#17292f;color:white;padding:8px}
+  .controls button{background:transparent;color:white;border:1px solid #78878a;font:inherit;padding:4px 10px;cursor:pointer}
+  .controls button:focus-visible,a:focus-visible{outline:3px solid #d77942}
+  .slide{display:none;width:min(100vw,1600px);min-height:min(100vh,900px);aspect-ratio:16/9;margin:auto;padding:48px 62px;background:var(--paper);position:relative;overflow:hidden}
+  .slide.active{display:flex;flex-direction:column}
+  .masthead{display:flex;align-items:center;justify-content:space-between;padding-bottom:11px;border-bottom:2px solid var(--ink);font-size:13px;font-weight:700;letter-spacing:.05em}
+  .masthead span:last-child{color:var(--muted);font-weight:400}
+  h1{font:700 clamp(27px,3vw,49px)/1.14 "Noto Sans TC","Microsoft JhengHei",sans-serif;letter-spacing:-.045em;margin:30px 0 9px}
+  .dek{margin:0 0 24px;font-size:19px;color:#45585c}
+  .slide-no{position:absolute;bottom:28px;right:62px;font:700 14px/1 Consolas,monospace;color:var(--red)}
+  .label{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--red);margin:0 0 10px}
+  .columns{display:grid;grid-template-columns:1.18fr .82fr;gap:28px;flex:1;min-height:0}
+  .screen{position:relative;min-height:0;border:1px solid #aeb8b4;background:white;overflow:hidden}
+  iframe{border:0;width:150%;height:150%;transform:scale(.6666667);transform-origin:top left;display:block;background:white}
+  .side{display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+  .decision{border-top:3px solid var(--red);padding-top:13px}
+  .decision strong{font-size:21px;line-height:1.3}
+  .decision p{font-size:17px;color:#425358}
+  .input-output{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .input-output>div{border-top:1px solid var(--rule);padding-top:10px}
+  .input-output b{display:block;font-size:13px}
+  .input-output p{font-size:14px;margin:6px 0;color:#425358}
+  .qr-row{display:flex;gap:16px;align-items:center;border-top:1px solid var(--rule);padding-top:13px}
+  .qr-row img{width:100px;height:100px;background:white;padding:5px;object-fit:contain}
+  .qr-row a{overflow-wrap:anywhere;color:#143b44;font-size:13px}
+  .qr-row small{display:block;color:var(--muted);margin-top:6px}
+  .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin:12px 0 20px}
+  .stage{border-top:3px solid var(--ink);padding:12px 11px 8px;background:#eeeee7;min-height:150px;position:relative}
+  .stage:not(:last-child):after{content:"→";font-size:22px;color:var(--red);position:absolute;right:-16px;top:57px;z-index:1}
+  .stage em{font:700 13px Consolas,monospace;color:var(--red);font-style:normal}
+  .stage h2{font-size:18px;margin:8px 0 6px}
+  .stage p{font-size:13px;color:#43565a;margin:0}
+  .models{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+  .models div{border:1px solid var(--rule);padding:13px;background:#fff}
+  .models b{display:block;font-size:16px}
+  .models span{font-size:13px;color:var(--muted)}
+  .formula{border-top:1px solid var(--rule);padding:18px 0 0;font-size:20px}
+  .formula b{color:var(--red)}
+  .note{font-size:14px;color:var(--muted);margin-top:auto}
+  .eval{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;flex:1}
+  .eval>div{border-top:3px solid var(--ink);padding-top:14px}
+  .eval h2{font-size:21px;margin:2px 0 15px}
+  table{width:100%;border-collapse:collapse;font-size:16px}
+  th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--rule)}
+  td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums;font-family:Consolas,monospace}
+  .eval p,.eval li{font-size:16px;line-height:1.6}
+  .callout{border-left:3px solid var(--red);padding:2px 0 2px 14px;margin-top:16px}
+  .callout strong{color:var(--red)}
+  .eval ul{padding-left:20px}
+  @media(max-width:800px){.slide{aspect-ratio:auto;min-height:100vh;padding:25px 18px 60px}.columns,.eval{grid-template-columns:1fr}.screen{min-height:300px}.pipeline{grid-template-columns:1fr 1fr}.stage{min-height:120px}.stage:after{display:none}.models{grid-template-columns:1fr 1fr}.slide-no{right:18px}.controls{bottom:4px}}
+  @media print{@page{size:16in 9in;margin:0}body{background:white;-webkit-print-color-adjust:exact;print-color-adjust:exact}.slide,.slide.active{display:flex!important;width:16in;height:9in;min-height:0;page-break-after:always;break-after:page}.controls{display:none}.screen iframe{visibility:hidden}.screen:after{content:"互動原型畫面請於網站查看 →";position:absolute;top:46%;left:10%;font-size:25px}}
+</style>
+</head>
+<body>
+<section class="slide active" aria-label="第 3 頁產品原型">
+  <div class="masthead"><span>CPBL / SP &nbsp;·&nbsp; 初審提案</span><span>03　產品原型與使用情境</span></div>
+  <h1>從一球的選擇，看見情境得分差。</h1>
+  <p class="dek">教練選定對戰、下一棒與球的位置，直接比較事件 SP 和 RE24。</p>
+  <div class="columns">
+    <div class="screen"><iframe id="simulator" title="CPBL SP 真實互動原型" loading="lazy"></iframe></div>
+    <div class="side">
+      <div class="decision"><p class="label">實戰問題</p><strong>二壘有人、兩人出局。<br>如果下一棒換人，這球的得分價值會怎麼變？</strong><p>同一個壘況，不代表打投對戰與後續打序的預期得分相同。</p></div>
+      <div class="input-output"><div><b>輸入情境</b><p>打者、投手、下一棒、進壘點、擊球結果及守備情境。</p></div><div><b>讀取結果</b><p>事件 SP、RE24 對照、角色分帳及模型說明。</p></div></div>
+      <div class="qr-row"><img src="simulator-qr.svg" alt="CPBL SP 模擬器固定網址 QR code"><div><b>掃碼體驗互動原型</b><br><a href="https://yuan-yuan-hackathon.github.io/cpbl-sp-simulator/" target="_blank" rel="noopener">yuan-yuan-hackathon.github.io/cpbl-sp-simulator/</a><small>介面持續調整；QR 指向固定網址。角色分帳目前不等於已驗證的個人能力。</small></div></div>
+    </div>
+  </div><span class="slide-no">03 / 07</span>
+</section>
+<section class="slide" aria-label="第 5 頁完整模型流程">
+  <div class="masthead"><span>CPBL / SP &nbsp;·&nbsp; 初審提案</span><span>05　完整模型架構</span></div>
+  <h1>每一步，都重新估計得分機會。</h1>
+  <p class="dek">固定 SP 分帳規則；各階段機率由歷史逐球資料學得，並以時間外資料驗證。</p>
+  <div class="pipeline">
+    <div class="stage"><em>01 / DATA</em><h2>整理逐球資料</h2><p>一球一列；核對球數、壘況、事件與球員身分。</p></div>
+    <div class="stage"><em>02 / BEFORE</em><h2>投球前 RE</h2><p>壘況、出局數、球數、打者、投手、下一棒。</p></div>
+    <div class="stage"><em>03 / MODELS</em><h2>逐階段預測</h2><p>投球、擊球、守備、跑壘的結果機率。</p></div>
+    <div class="stage"><em>04 / CREDIT</em><h2>計算角色 SP</h2><p>每一步的預期得分差；未知部分保留未分配。</p></div>
+    <div class="stage"><em>05 / USE</em><h2>驗證與決策</h2><p>比較 RE24；通過驗證後進入情境模擬器。</p></div>
+  </div>
+  <p class="label">四個接續的模型</p>
+  <div class="models">
+    <div><b>投手</b><span>球速 × 球種 × 進壘點 → 結果機率</span></div>
+    <div><b>打者</b><span>揮擊 × 擊球品質 → 預期結果</span></div>
+    <div><b>野手</b><span>落點 × 站位 × 滯空時間 → 處理機率</span></div>
+    <div><b>跑者</b><span>起點 × 球的處理 × 跑速 → 推進機率</span></div>
+  </div>
+  <div class="formula"><b>事件 SP</b> ＝ 當球得分 ＋ 球後預期得分 − 投球前預期得分</div>
+  <p class="note">下一棒影響情境得分基準；不同角色的 SP 加上未分配部分，必須回到同一事件總值。</p>
+  <span class="slide-no">05 / 07</span>
+</section>
+<section class="slide" aria-label="第 6 頁效能評估">
+  <div class="masthead"><span>CPBL / SP &nbsp;·&nbsp; 初審提案</span><span>06　效能評估與驗證計畫</span></div>
+  <h1>能不能提供比 RE24 更多的資訊？</h1>
+  <p class="dek">先比較時間外得分預測，再檢查機率校準與個人分數是否能預測後期表現。</p>
+  <div class="eval">
+    <div><p class="label">目前的時間外測試｜2026-08-23 起</p><h2>剩餘得分預測的 RMSE</h2>
+      <table><thead><tr><th>模型</th><th>RMSE ↓</th></tr></thead><tbody><tr><td>RE24 基準</td><td>0.8815</td></tr><tr><td>球數與打投情境</td><td>0.8797</td></tr><tr><td>再加入投球資訊</td><td>0.8796</td></tr></tbody></table>
+      <p class="callout"><strong>目前結論：</strong>數值差異很小；加入投球資訊相較投球前模型的改善區間包含零，尚不能宣稱明確勝出。</p>
+      <p class="note">訓練 41,970 球；測試 18,287 球。以上是得分預測比較，不是投手個人貢獻的驗證。</p>
+    </div>
+    <div><p class="label">決賽版驗收標準</p><h2>模型要通過三道檢查</h2>
+      <ul><li><b>事件機率：</b>比較 Brier score、log loss 與校準，檢查不同球路和球數是否失準。</li><li><b>情境得分：</b>按日期、整場比賽切分；和 RE24、球數 RE 比較 MAE／RMSE，報告不確定性。</li><li><b>個人貢獻：</b>以前期 SP 預測後期表現，與前期實際失分等簡單基準比較；低樣本分數收縮。</li></ul>
+      <p class="callout"><strong>通過才升級用途：</strong>未驗證的投手、野手與跑者分數先作情境分帳，不作確定的個人能力排名。</p>
+    </div>
+  </div><span class="slide-no">06 / 07</span>
+</section>
+<div class="controls"><button id="prev" type="button">← 上一頁</button><span id="counter">3 / 5 / 6</span><button id="next" type="button">下一頁 →</button></div>
+<script>
+  const slides=[...document.querySelectorAll(".slide")];let current=0;
+  const frame=document.getElementById("simulator");
+  frame.src=location.hostname.endsWith("github.io")?"../index.html":"../dist/index.html";
+  function show(n){current=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle("active",i===current));document.getElementById("counter").textContent=["03","05","06"][current]+" / 07"}
+  document.getElementById("prev").onclick=()=>show(current-1);
+  document.getElementById("next").onclick=()=>show(current+1);
+  document.addEventListener("keydown",e=>{if(e.key==="ArrowRight")show(current+1);if(e.key==="ArrowLeft")show(current-1)});
+  show(0);
+</script>
+</body>
+</html>
