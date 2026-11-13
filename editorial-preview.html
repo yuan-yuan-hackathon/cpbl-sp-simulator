@@ -6,7 +6,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Arial,'Noto
 main{max-width:1440px;margin:auto;padding:0 24px 28px}
 header{position:relative;background:var(--deep);color:#f9f8f2;padding:31px 30px 28px;border:0;border-bottom:5px solid var(--red);border-radius:0;margin:0 -24px 22px;box-shadow:none}
 header:before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:repeating-linear-gradient(90deg,#f4f0e6 0 25px,transparent 25px 30px);opacity:.38}
-header h1{font-size:clamp(28px,3.5vw,46px);font-weight:800;line-height:1.15;letter-spacing:-.045em;margin:0 0 9px}
+header h1{font-size:clamp(38px,4.8vw,66px);font-weight:800;line-height:1.15;letter-spacing:-.045em;margin:0 0 9px}
 header p{font-size:13px;letter-spacing:.02em;color:#c1d2d1;margin:0}
 .layout{display:grid;grid-template-columns:minmax(305px,354px) minmax(0,1fr);gap:22px;align-items:start}
 .layout>div{min-width:0}
@@ -58,42 +58,110 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 .pitch-map svg,.field-map svg{width:100%;height:100%;display:block;pointer-events:none}
 .dot,.landing-dot{position:absolute;z-index:2;width:17px;height:17px;border:2px solid #f8f5e9;border-radius:50%;background:#e85b3e;transform:translate(-50%,-50%);box-shadow:0 0 0 2px #102832;pointer-events:none}
 .trajectory-panel{margin-top:13px;border:1px solid #51666f;border-radius:0;overflow:hidden;background:#18222c}.trajectory-panel svg{display:block;width:100%;height:145px}.trajectory-panel p{margin:4px 9px 9px}
+.stance-switch{display:flex;gap:0;margin:10px 0 4px;max-width:340px;border:1px solid #b9aca0}
+.stance-switch label{flex:1;margin:0;padding:7px 10px;text-align:center;font-size:12px;cursor:pointer;background:#f7f4ec;color:#435159}
+.stance-switch label+label{border-left:1px solid #b9aca0}
+.stance-switch label:has(input:checked){background:#213c3f;color:#fff}
+.stance-switch input{accent-color:#e9b98d}
+.pitch-map .batter-left{display:none}
+.card:has(#stance-left:checked) .pitch-map .batter-left{display:inline}
+.card:has(#stance-left:checked) .pitch-map .batter-right{display:none}
+.pitch-map,.field-map{border-color:#85786a}
+.dot,.landing-dot{width:23px;height:23px;background:#faf7ec;border:1px solid #e2d9c5;box-shadow:0 2px 8px #121c1ec9,0 0 0 2px #17232a}
+.dot:before,.dot:after,.landing-dot:before,.landing-dot:after{content:"";position:absolute;top:3px;bottom:3px;width:5px;border:1.5px dashed #bb3531;border-top:0;border-bottom:0;border-radius:50%;pointer-events:none}
+.dot:before,.landing-dot:before{left:3px;transform:rotate(-15deg)}
+.dot:after,.landing-dot:after{right:3px;transform:rotate(-15deg)}
 @media(max-width:900px){main{padding:0 12px 20px}header{margin:0 -12px 12px;padding:22px 17px}.layout{grid-template-columns:1fr;gap:12px}.layout>div:first-child{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.layout>div:first-child>.card{border-right:1px solid var(--line)}}
 @media(max-width:620px){.layout>div:first-child{display:block}.metrics,#probabilities{grid-template-columns:1fr}.metric{border-left:0;border-top:1px solid var(--line);padding:10px 0}.metric:first-child{border-top:0}.layout>div:last-child>.card:first-child .metrics{grid-template-columns:1fr 1fr}.layout>div:last-child>.card:first-child .metric:first-child{grid-column:1/-1;grid-row:auto;border-right:0;border-bottom:1px solid #516a70}.layout>div:last-child>.card:first-child .metric:nth-child(2){padding-left:0;border-right:1px solid #516a70;border-bottom:0}.layout>div:last-child>.card:first-child .metric:last-child{padding-left:14px}.layout>div:last-child>.card{padding:15px}.layout>div:last-child>.card:first-child{padding:18px}}
-</style></head><body><main><header><h1>CPBL 單球事件 SP 試算器</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
+</style></head><body><main><header><h1>這一球，得分機會變了多少？</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
 <div class="layout"><div>
 <section class="card"><h2>① 投球前情境</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
-<section class="card"><h2>② 這球投在哪裡？</h2><p class="help">點擊好球帶示意區，或調整座標。x 是左右位置、z 是高度，單位為公尺。</p><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
+<section class="card"><h2>② 這球投在哪裡？</h2><p class="help">點擊好球帶示意區，或調整座標。x 是左右位置、z 是高度，單位為公尺。</p><div class="stance-switch" role="group" aria-label="打擊站位"><label><input type="radio" id="stance-right" name="stance" checked> 右打</label><label><input type="radio" id="stance-left" name="stance"> 左打</label></div><p class="help">左右打切換只改變圖中的站位；目前資料沒有打者慣用打擊側，SP 計算不受影響。</p><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
 <svg viewBox="0 0 300 230" preserveAspectRatio="none" aria-hidden="true">
 
-<rect width="300" height="230" fill="#18222c"/><path d="M0 195 Q150 175 300 195 L300 230 H0Z" fill="#202f3c"/>
-<path d="M78 85H222 M78 129H222 M78 173H222" stroke="#8595a6" stroke-width="1" stroke-dasharray="3 4" opacity=".35"/>
-<rect x="109" y="79" width="82" height="86" rx="2" fill="#253543" fill-opacity=".35" stroke="#eff6ff" stroke-width="2"/>
-<path d="M136.3 79V165 M163.7 79V165 M109 107.7H191 M109 136.3H191" stroke="#cbd5e1" stroke-width="1" opacity=".65"/>
-<path d="M127 208 L173 208 L167 221 L150 228 L133 221Z" fill="#ffffff" stroke="#a8b6c5" stroke-width="2"/>
-<text x="150" y="21" text-anchor="middle" fill="#e2e8f0" font-size="12">投手視角 · 進壘平面</text>
-<text x="10" y="122" fill="#e2e8f0" font-size="11">左</text><text x="278" y="122" fill="#e2e8f0" font-size="11">右</text>
+<defs>
+ <linearGradient id="plateSky" x2="0" y2="1"><stop stop-color="#31464d"/><stop offset=".58" stop-color="#556264"/><stop offset="1" stop-color="#8f7458"/></linearGradient>
+ <radialGradient id="plateDirt"><stop stop-color="#ac8260"/><stop offset="1" stop-color="#6e503e"/></radialGradient>
+ <pattern id="plateGrain" width="19" height="15" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".7" fill="#d0ab84" opacity=".36"/><circle cx="15" cy="9" r=".6" fill="#472f26" opacity=".3"/></pattern>
+</defs>
+<rect width="300" height="230" fill="url(#plateSky)"/>
+<path d="M0 86 Q150 68 300 86 V230 H0Z" fill="url(#plateDirt)"/>
+<path d="M0 86 Q150 68 300 86 V230 H0Z" fill="url(#plateGrain)"/>
+<path d="M0 90 Q150 77 300 90" stroke="#c29b74" stroke-width="1" fill="none" opacity=".8"/>
+<path d="M0 179 Q150 157 300 179 M0 209 Q150 189 300 209" stroke="#c39a71" stroke-width="1" opacity=".32" fill="none"/>
+<!-- Batter boxes, seen from the mound; strike-zone anchors stay at x=109..191. -->
+<path d="M16 88 H93 V211 H16Z M207 88 H284 V211 H207Z" fill="#8b6349" opacity=".25" stroke="#eee7d7" stroke-width="1.5"/>
+<path d="M109 79 V165 M191 79 V165 M109 79 H191 M109 165 H191" stroke="#faf3dc" stroke-width="2.2" fill="none"/>
+<path d="M136.3 79 V165 M163.7 79 V165 M109 107.7 H191 M109 136.3 H191" stroke="#fbf5df" stroke-width=".8" stroke-dasharray="4 3" opacity=".72"/>
+<path d="M127 203 L173 203 L169 218 L150 228 L131 218Z" fill="#f8f4e7" stroke="#413d34" stroke-width="1.5"/>
+<path d="M126 204 L174 204" stroke="#fff" stroke-width="2"/>
+<g class="batter-right" fill="#23323a" stroke="#f2dfbf" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
+ <path d="M227 119 Q221 127 221 149 L237 155 L252 145 L248 125 Q240 116 227 119Z"/>
+ <path d="M224 146 L220 171 L208 187 L219 191 L233 174 L237 154Z"/>
+ <path d="M239 150 L253 167 L255 195 L265 196 L268 165 L248 141Z"/>
+ <path d="M207 188 L222 188 L224 196 L203 197Z M252 192 L269 191 L272 198 L250 198Z"/>
+ <path d="M226 124 L211 116 L204 99 M246 129 L227 112 L212 101" fill="none" stroke="#23323a" stroke-width="9"/>
+ <path d="M224 90 Q231 82 243 85 L249 92 L244 107 L233 112 L225 103Z"/>
+ <path d="M221 93 Q224 78 239 78 Q251 79 251 92 L236 97Z" fill="#18303a"/>
+ <path d="M230 96 L220 97" stroke="#f2dfbf" stroke-width="2"/>
+ <path d="M208 106 L195 49" fill="none" stroke="#d9ad6c" stroke-width="5"/>
+ <path d="M206 102 L202 107 M216 111 L209 116" stroke="#f0e6d0" stroke-width="3"/>
+</g>
+<g class="batter-left" transform="translate(300 0) scale(-1 1)" fill="#23323a" stroke="#f2dfbf" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
+ <path d="M227 119 Q221 127 221 149 L237 155 L252 145 L248 125 Q240 116 227 119Z"/>
+ <path d="M224 146 L220 171 L208 187 L219 191 L233 174 L237 154Z"/>
+ <path d="M239 150 L253 167 L255 195 L265 196 L268 165 L248 141Z"/>
+ <path d="M207 188 L222 188 L224 196 L203 197Z M252 192 L269 191 L272 198 L250 198Z"/>
+ <path d="M226 124 L211 116 L204 99 M246 129 L227 112 L212 101" fill="none" stroke="#23323a" stroke-width="9"/>
+ <path d="M224 90 Q231 82 243 85 L249 92 L244 107 L233 112 L225 103Z"/>
+ <path d="M221 93 Q224 78 239 78 Q251 79 251 92 L236 97Z" fill="#18303a"/>
+ <path d="M230 96 L220 97" stroke="#f2dfbf" stroke-width="2"/>
+ <path d="M208 106 L195 49" fill="none" stroke="#d9ad6c" stroke-width="5"/>
+ <path d="M206 102 L202 107 M216 111 L209 116" stroke="#f0e6d0" stroke-width="3"/>
+</g>
+<text x="150" y="19" text-anchor="middle" fill="#f6f1e6" font-size="11" font-family="Arial, sans-serif" letter-spacing=".7">投手視角 · 本壘進球位置</text>
+<text x="7" y="122" fill="#fcf5e3" font-size="11">左</text><text x="279" y="122" fill="#fcf5e3" font-size="11">右</text>
 </svg><span id="dot" class="dot"></span></div><div class="coordinates" id="coords"></div><label for="x">左右 x（公尺）</label><input id="x" type="range" min="-0.8" max="0.8" step="0.025" value="0"><label for="z">高度 z（公尺）</label><input id="z" type="range" min="0" max="1.6" step="0.025" value="0.8"><p class="help" id="sample"></p></section>
 <section class="card"><h2>③ 擊球落點與防守者</h2>
 <p class="help">點選球場示意圖，或輸入落點方向及本壘距離。正方向偏右外野；這是 Trackman 落點的近似示意。</p>
 <div id="fieldmap" class="field-map" role="img" aria-label="從本壘往外野看的可點選擊球落點圖">
 <svg viewBox="0 0 300 240" preserveAspectRatio="none" aria-hidden="true">
 
-<rect width="300" height="240" fill="#18222c"/>
-<path d="M150 220 L5 75 Q150 -78 295 75Z" fill="#243746" stroke="#becbd8" stroke-width="2"/>
-<path d="M150 220 L15 85 M150 220 L285 85" stroke="#dce5ef" stroke-width="2"/>
-<path d="M150 220 L111 181 L150 142 L189 181Z" fill="#324658" stroke="#a8b8c7" stroke-width="1"/>
-<path d="M150 220 L189 181 L150 142 L111 181Z" fill="none" stroke="#c2cbd5" stroke-width="1"/>
-<circle cx="150" cy="181" r="6" fill="#324658" stroke="#a8b8c7"/>
-<rect x="185" y="177" width="7" height="7" transform="rotate(45 188.5 180.5)" fill="white"/>
-<rect x="146.5" y="138.5" width="7" height="7" transform="rotate(45 150 142)" fill="white"/>
-<rect x="107" y="177" width="7" height="7" transform="rotate(45 110.5 180.5)" fill="white"/>
-<path d="M144 216H156L153 223H147Z" fill="white"/>
-<path d="M38 96 Q150 -17 262 96" fill="none" stroke="#aabaca" stroke-width="1" stroke-dasharray="4 4"/>
-<text x="35" y="80" fill="white" font-size="11">左外野</text><text x="131" y="28" fill="white" font-size="11">中外野</text><text x="229" y="80" fill="white" font-size="11">右外野</text>
-<text x="132" y="237" fill="white" font-size="11">本壘</text>
-<path id="flightplan" d="M150 220 L150 188" fill="none" stroke="#f97316" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4"/>
-<circle id="flightmid" cx="150" cy="202" r="4" fill="#fb923c" stroke="#18222c" stroke-width="1"/>
+<defs>
+ <clipPath id="fieldClip"><path d="M150 220 L5 75 Q150 -78 295 75 Z"/></clipPath>
+ <pattern id="turfStripe" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(28)"><rect width="28" height="28" fill="#416e52"/><rect width="14" height="28" fill="#517e59"/></pattern>
+ <pattern id="ballSeams" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#f9f6ea"/><path d="M2 0 Q8 6 2 12 M10 0 Q4 6 10 12" stroke="#c4483d" stroke-width="1" stroke-dasharray="2 1" fill="none"/></pattern>
+</defs>
+<rect width="300" height="240" fill="#233840"/>
+<g clip-path="url(#fieldClip)">
+ <rect width="300" height="240" fill="url(#turfStripe)"/>
+ <path d="M150 220 L43 110 Q150 58 257 110Z" fill="#855d42"/>
+ <path d="M150 220 L56 118 Q150 71 244 118Z" fill="#a87850"/>
+ <path d="M150 220 L70 125 Q150 89 230 125Z" fill="#477352"/>
+ <path d="M150 220 L108 181 L150 141 L192 181Z" fill="#a57b57"/>
+ <path d="M150 214 L119 181 L150 153 L181 181Z" fill="#537c56"/>
+ <circle cx="150" cy="180" r="7.5" fill="#af805c"/>
+ <circle cx="150" cy="180" r="3.5" fill="#c9ae8d"/>
+ <path d="M40 97 Q150 -13 260 97 M58 112 Q150 27 242 112" fill="none" stroke="#e5e8ce" stroke-width="1" opacity=".35" stroke-dasharray="3 5"/>
+ <path d="M150 220 L5 75 M150 220 L295 75" stroke="#f3e8cf" stroke-width="2"/>
+ <path d="M150 220 L111 181 L150 141 L189 181 Z" fill="none" stroke="#ece1c9" stroke-width="1.4"/>
+ <path d="M150 220 L108 181 M150 220 L192 181" stroke="#f3e8cf" stroke-width="1.2"/>
+ <path d="M94 179 L107 177 M191 177 L205 179" stroke="#cdb796" stroke-width="1" opacity=".55"/>
+</g>
+<path d="M5 75 Q150 -78 295 75" fill="none" stroke="#e6ddc7" stroke-width="5"/>
+<path d="M5 75 Q150 -78 295 75" fill="none" stroke="#52616a" stroke-width="2"/>
+<path d="M9 68 L9 85 M291 68 L291 85" stroke="#fff2d5" stroke-width="2.5"/>
+<path d="M31 82 Q150 -46 269 82" stroke="#c9d5c9" stroke-width=".7" fill="none" opacity=".7"/>
+<rect x="185.5" y="177.5" width="7" height="7" transform="rotate(45 189 181)" fill="#fcf8e9" stroke="#5a4634" stroke-width=".4"/>
+<rect x="146.5" y="137.5" width="7" height="7" transform="rotate(45 150 141)" fill="#fcf8e9" stroke="#5a4634" stroke-width=".4"/>
+<rect x="107.5" y="177.5" width="7" height="7" transform="rotate(45 111 181)" fill="#fcf8e9" stroke="#5a4634" stroke-width=".4"/>
+<path d="M144 216 H156 L152 223 H148Z" fill="#fff9eb" stroke="#5a4634" stroke-width=".7"/>
+<g fill="#f7f2e5" font-size="10" font-family="Arial, sans-serif">
+ <text x="18" y="82">左外野</text><text x="131" y="26">中外野</text><text x="241" y="82">右外野</text>
+ <text x="133" y="236">本壘</text>
+</g>
+<path id="flightplan" d="M150 220 L150 188" fill="none" stroke="#fff4d6" stroke-width="2.3" stroke-linecap="round" stroke-dasharray="4 4"/>
+<circle id="flightmid" cx="150" cy="202" r="4" fill="url(#ballSeams)" stroke="#273d36" stroke-width="1"/>
 </svg><span id="landingdot" class="landing-dot"></span></div>
 <label for="bearing">落點方向（度）</label><input id="bearing" type="range" min="-55" max="55" step="1" value="0">
 <label for="distance">距本壘（公尺）</label><input id="distance" type="range" min="0" max="150" step="1" value="25"><p id="landinglabel" class="help"></p>
@@ -109,7 +177,7 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 <rect width="320" height="145" fill="#18222c"/>
 <path d="M16 119H306" stroke="#91a4b6" stroke-width="2"/>
 <path id="trajectorypath" d="M18 118 Q160 92 302 118" fill="none" stroke="#fb923c" stroke-width="3" stroke-linecap="round"/>
-<circle cx="18" cy="118" r="4" fill="#cbd5e1"/><circle id="trajectoryball" cx="160" cy="101" r="6" fill="#e65037" stroke="white" stroke-width="2"/>
+<circle cx="18" cy="118" r="4" fill="#cbd5e1"/><circle id="trajectoryball" cx="160" cy="101" r="7" fill="#f8f5e9" stroke="#c4483d" stroke-width="1.5" stroke-dasharray="3 2"/>
 <text x="16" y="137" font-size="11" fill="#e2e8f0">本壘</text><text id="trajectorydistance" x="306" y="137" text-anchor="end" font-size="11" fill="#e2e8f0">落點 25 m</text>
 </svg><p id="trajectorynote" class="help"></p></div><label for="fielder">防守球員</label><select id="fielder"></select><p class="help">球員選擇指定記分對象；目前缺個人站位與接球機會資料，選不同球員不會改變機率。擊球仰角、初速與落點會改變聯盟機率。</p></section>
 <section class="card"><h2>④ 實際擊球結果</h2><label for="result">事件類型</label><select id="result"><option value="1B" selected>一壘安打</option><option value="2B">二壘安打</option><option value="3B">三壘安打</option><option value="HR">全壘打</option><option value="CONTACT_OUT">擊球出局</option><option value="K">三振</option><option value="WALK">保送／觸身球</option><option value="OTHER">失誤／野手選擇等</option></select><p class="help">此版以打席結束的事件為單位；一般壞球、好球尚未單獨計入。</p></section></div>
