@@ -7,56 +7,7 @@ main{max-width:1180px;margin:auto;padding:22px}header{background:var(--navy);col
 .pitch-map{position:relative;width:100%;max-width:285px;aspect-ratio:1.5;margin:10px auto 0;background:linear-gradient(90deg,#e8f2ed 0 20%,#f8f9ee 20% 80%,#e8f2ed 80%);border:1px solid #8eaaa1;border-radius:9px;cursor:crosshair}.zone{position:absolute;left:20%;width:60%;top:18%;height:64%;border:2px solid var(--green);pointer-events:none}.dot{position:absolute;width:15px;height:15px;background:#e88642;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 1px 3px #345;pointer-events:none}.help{font-size:13px;color:#536b62;margin:7px 0}.coordinates{font-variant-numeric:tabular-nums;font-weight:700}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.metric{background:#f1f7ee;border:1px solid #cbdcce;border-radius:9px;padding:14px}.metric b{display:block;font-size:clamp(19px,3vw,29px);font-variant-numeric:tabular-nums}.metric small{color:#45645a}.positive{color:#216246}.negative{color:#a24134}.breakdown{width:100%;border-collapse:collapse}th,td{padding:8px;text-align:left;border-bottom:1px solid var(--line)}th{background:#f3f7f3}.bar{height:8px;background:#dfebe2;border-radius:5px;overflow:hidden}.bar span{display:block;height:100%;background:#327c60}.warn{color:#914631}a{color:#bfe495}details{margin-top:10px}summary{cursor:pointer;font-weight:700}footer{font-size:13px;color:#50645d;margin:15px 0}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}main{padding:10px}header{padding:18px}}
 .field-map{position:relative;width:100%;max-width:300px;height:220px;margin:10px auto;background:radial-gradient(ellipse at 50% 103%,#a1c999,#49815e);border-radius:50% 50% 8px 8px;overflow:hidden;cursor:crosshair;border:1px solid #8eaaa1}.field-map .plate{position:absolute;bottom:2px;left:47%;font-size:11px;color:#fff}.landing-dot{position:absolute;width:14px;height:14px;border:2px solid white;border-radius:50%;background:#ef843b;transform:translate(-50%,-50%);box-shadow:0 1px 4px #234;pointer-events:none}.field-map .arc{position:absolute;top:12%;left:8%;height:175%;width:84%;border:1px solid #dce7ce;border-radius:50%;pointer-events:none}
-.pitch-map{max-width:340px;aspect-ratio:300/230;background:#32564e;border-radius:11px;overflow:hidden;touch-action:none}.pitch-map svg,.field-map svg{width:100%;height:100%;display:block;pointer-events:none}.pitch-map .dot{z-index:2;background:#ff9a48;width:17px;height:17px}.field-map{max-width:360px;height:auto;aspect-ratio:300/240;border-radius:10px;background:#285c49;touch-action:none}.field-map .landing-dot{z-index:2;background:#ff9a48;width:17px;height:17px}.trajectory-panel{margin-top:13px;border:1px solid #d5dfd9;border-radius:9px;overflow:hidden;background:#edf4ef}.trajectory-panel svg{display:block;width:100%;height:145px}.trajectory-panel p{margin:4px 10px 9px}/* SP 結果區排版：刪除本段即可還原 */
-.layout > div:last-child > section.card:first-child .metrics {
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 0;
-  border: 1px solid #d5dfd9;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.layout > div:last-child > section.card:first-child .metric {
-  border: 0;
-  border-radius: 0;
-  background: #f6f7f4;
-  padding: 12px 18px;
-}
-.layout > div:last-child > section.card:first-child .metric:first-child {
-  grid-row: span 2;
-  background: #102a33;
-  color: white;
-  padding: 22px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.layout > div:last-child > section.card:first-child .metric:first-child small {
-  color: #d9e6e2;
-}
-.layout > div:last-child > section.card:first-child .metric:nth-child(2) {
-  border-bottom: 1px solid #d5dfd9;
-}
-.layout > div:last-child > section.card:first-child #sp {
-  color: white;
-  font-size: clamp(44px, 5vw, 68px);
-  line-height: 1.15;
-  letter-spacing: -0.04em;
-  margin: 8px 0;
-}
-@media (max-width: 500px) {
-  .layout > div:last-child > section.card:first-child .metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .layout > div:last-child > section.card:first-child .metric:first-child {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
-  .layout > div:last-child > section.card:first-child .metric:nth-child(2) {
-    border-bottom: 0;
-    border-right: 1px solid #d5dfd9;
-  }
-}
-/* SP 結果區排版結束 */</style></head><body><main><header><h1>CPBL 單球事件 SP 試算器</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
+.pitch-map{max-width:340px;aspect-ratio:300/230;background:#32564e;border-radius:11px;overflow:hidden;touch-action:none}.pitch-map svg,.field-map svg{width:100%;height:100%;display:block;pointer-events:none}.pitch-map .dot{z-index:2;background:#ff9a48;width:17px;height:17px}.field-map{max-width:360px;height:auto;aspect-ratio:300/240;border-radius:10px;background:#285c49;touch-action:none}.field-map .landing-dot{z-index:2;background:#ff9a48;width:17px;height:17px}.trajectory-panel{margin-top:13px;border:1px solid #d5dfd9;border-radius:9px;overflow:hidden;background:#edf4ef}.trajectory-panel svg{display:block;width:100%;height:145px}.trajectory-panel p{margin:4px 10px 9px}</style></head><body><main><header><h1>CPBL 單球事件 SP 試算器</h1><p>選擇打投對戰、下一棒、進壘點與結果，量出該事件帶來的情境得分差。</p></header>
 <div class="layout"><div>
 <section class="card"><h2>① 投球前情境</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
 <section class="card"><h2>② 這球投在哪裡？</h2><p class="help">點擊好球帶示意區，或調整座標。x 是左右位置、z 是高度，單位為公尺。</p><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
