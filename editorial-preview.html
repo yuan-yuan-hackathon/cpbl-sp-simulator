@@ -81,6 +81,19 @@ body{font-size:var(--type-body)}
 header h1,.layout>div:last-child>.card:first-child #sp{font-size:var(--type-large)!important}
 h2,h3,.metric b,.layout>div:last-child>.card:first-child h2,.layout>div:last-child>.card:first-child .metric b,.layout>div:last-child>.card:nth-child(2) .metrics .metric b{font-size:var(--type-medium)!important}
 header p,label,select,.bases label,.help,.coordinates,.metric small,.layout>div:last-child>.card:first-child .metric small,.layout>div:last-child>.card:first-child #explanation,.breakdown,#probabilities,footer,.stance-badge{font-size:var(--type-body)!important}
+
+/* One color per text hierarchy across the page. */
+:root{--color-large:#18313a;--color-medium:#315f96;--color-body:#52666b}
+header,.layout>div:last-child>.card:first-child{background:#fbfbf7;color:var(--color-body)}
+header{border-bottom-color:var(--red)}
+header:before{background:repeating-linear-gradient(90deg,var(--color-large) 0 25px,transparent 25px 30px)}
+.layout>div:last-child>.card:first-child{border:1px solid #c4c9c6;border-top:4px solid var(--red)}
+.layout>div:last-child>.card:first-child h2{border-bottom-color:#8fa4a6}
+.layout>div:last-child>.card:first-child .metric,.layout>div:last-child>.card:first-child .metric:first-child{border-color:#c5ccc9}
+.layout>div:last-child>.card:first-child #explanation{border-top-color:#c5ccc9}
+header h1,.layout>div:last-child>.card:first-child #sp,.layout>div:last-child>.card:first-child #sp.positive,.layout>div:last-child>.card:first-child #sp.negative{color:var(--color-large)!important}
+h2,h3,.metric b,.metric b.positive,.metric b.negative,.layout>div:last-child>.card:first-child h2,.layout>div:last-child>.card:first-child .metric b,.layout>div:last-child>.card:first-child .metric b.positive,.layout>div:last-child>.card:first-child .metric b.negative,.breakdown td{color:var(--color-medium)!important}
+body,header p,label,select,.bases label,.help,.coordinates,.metric small,.layout>div:last-child>.card:first-child .metric small,.layout>div:last-child>.card:first-child #explanation,.breakdown th,#probabilities,footer,.stance-badge,summary,.warn,.layout>div:last-child>.card:first-child .warn{color:var(--color-body)!important}
 </style></head><body><main><header><h1>CPBL單球事件SP計算器</h1><p>這一球，得分機會變了多少？</p></header>
 <div class="layout"><div>
 <section class="card"><h2>投球前的場上狀況</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
