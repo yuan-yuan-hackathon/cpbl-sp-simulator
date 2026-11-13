@@ -104,22 +104,22 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 <rect width="300" height="240" fill="#527e23"/>
 <g clip-path="url(#fieldClip)">
  <rect width="300" height="240" fill="url(#turfStripe)"/>
- <path d="M150 222 L82 154 C83 125 112 99 150 99 C188 99 217 125 218 154 Z" fill="#cc7a34"/>
- <path d="M150 190 L103 156 L150 118 L197 156 Z" fill="#527e23"/>
- <circle cx="150" cy="206" r="21" fill="#cc7a34"/>
+ <path d="M150 218 L82 154 C83 125 112 99 150 99 C188 99 217 125 218 154 Z" fill="#cc7a34"/>
+ <path d="M150 194 L99 156 L150 118 L201 156 Z" fill="#527e23"/>
+ <circle cx="150" cy="194" r="21" fill="#cc7a34"/>
  <circle cx="150" cy="144" r="6" fill="#cc7a34"/>
  <path d="M146 144 H154" stroke="#fffef6" stroke-width="2.2"/>
- <path d="M150 220 L103 156 L150 118 L197 156 Z" stroke="#fcfcf9" stroke-width=".9" opacity=".8" fill="none"/>
- <path d="M14 93 L150 220 L286 93" fill="none" stroke="#fffef8" stroke-width="1.15"/>
- <path d="M136 211 H144 V221 H136 Z M156 211 H164 V221 H156 Z" stroke="#fffdf6" stroke-width=".65" fill="none"/>
+ <path d="M150 194 L99 156 L150 118 L201 156 Z" stroke="#fcfcf9" stroke-width=".9" opacity=".8" fill="none"/>
+ <path d="M14 93 L150 194 L286 93" fill="none" stroke="#fffef8" stroke-width="1.15"/>
+ <path d="M136 185 H144 V199 H136 Z M156 185 H164 V199 H156 Z" stroke="#fffdf6" stroke-width=".65" fill="none"/>
 </g>
 <path d="M150 232 L10 120 C11 68 70 8 150 8 C230 8 289 68 290 120 Z" fill="none" stroke="#fffdf6" stroke-width="1.8" stroke-linejoin="round"/>
-<rect x="100.5" y="153.5" width="5" height="5" transform="rotate(45 103 156)" fill="#fffdf6"/>
+<rect x="96.5" y="153.5" width="5" height="5" transform="rotate(45 99 156)" fill="#fffdf6"/>
 <rect x="147.5" y="115.5" width="5" height="5" transform="rotate(45 150 118)" fill="#fffdf6"/>
-<rect x="194.5" y="153.5" width="5" height="5" transform="rotate(45 197 156)" fill="#fffdf6"/>
-<path d="M144 217 H156 L150 224 Z" fill="#fffdf6"/>
-<path id="flightplan" d="M150 220 L150 188" fill="none" stroke="#fff4d6" stroke-width="2.3" stroke-linecap="round" stroke-dasharray="4 4"/>
-<circle id="flightmid" cx="150" cy="202" r="4" fill="url(#ballSeams)" stroke="#273d36" stroke-width="1"/>
+<rect x="198.5" y="153.5" width="5" height="5" transform="rotate(45 201 156)" fill="#fffdf6"/>
+<path d="M144 191 H156 L150 198 Z" fill="#fffdf6"/>
+<path id="flightplan" d="M150 194 L150 162" fill="none" stroke="#fff4d6" stroke-width="2.3" stroke-linecap="round" stroke-dasharray="4 4"/>
+<circle id="flightmid" cx="150" cy="178" r="4" fill="url(#ballSeams)" stroke="#273d36" stroke-width="1"/>
 </svg><span id="landingdot" class="landing-dot"><svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><defs><radialGradient id="landingMarkerBall" cx="35%" cy="28%" r="72%"><stop stop-color="#fffefa"/><stop offset=".68" stop-color="#f5f1e6"/><stop offset="1" stop-color="#d6cdbb"/></radialGradient><clipPath id="landingMarkerBall-clip"><circle cx="24" cy="24" r="21"/></clipPath></defs><circle cx="24" cy="24" r="21" fill="url(#landingMarkerBall)" stroke="#c6baa6" stroke-width="1.2"/><g clip-path="url(#landingMarkerBall-clip)" fill="none" stroke="#b63b35" stroke-linecap="round"><path d="M9 8 C23 16 23 32 9 40 M39 8 C25 16 25 32 39 40" stroke-width="1.8"/><path d="M10 12 l6 -2 M13 16 l6 -1 M15 20 l6 -.3 M16 24 l6 1 M15 28 l6 2 M12 32 l6 2.5 M9 36 l6 3 M38 12 l-6 -2 M35 16 l-6 -1 M33 20 l-6 -.3 M32 24 l-6 1 M33 28 l-6 2 M36 32 l-6 2.5 M39 36 l-6 3" stroke-width="1.1"/></g><path d="M15 8 Q22 4 28 6" stroke="#fff" stroke-width="1.2" opacity=".85" fill="none"/></svg></span></div>
 <label for="bearing">落點方向（度）</label><input id="bearing" type="range" min="-55" max="55" step="1" value="0">
 <label for="distance">距本壘（公尺）</label><input id="distance" type="range" min="0" max="150" step="1" value="25"><p id="landinglabel" class="help"></p>
@@ -177,10 +177,10 @@ const kind=angle<10?'ground':angle<25?'line':angle<50?'fly':'popup';$('ballkind'
 $('balltype').textContent=`目前判定：${ballType} · 仰角 ${angle}° · 初速 ${speed} km/h`;
 
 const rad=bearing*Math.PI/180,rr=Math.min(1,distance/150);
-const landX=150+190*rr*Math.sin(rad),landY=220-190*rr*Math.cos(rad);
+const landX=150+190*rr*Math.sin(rad),landY=194-190*rr*Math.cos(rad);
 $('landingdot').style.left=(landX/3)+'%';$('landingdot').style.top=(landY/2.4)+'%';
-$('flightplan').setAttribute('d',`M150 220 L${landX.toFixed(1)} ${landY.toFixed(1)}`);
-$('flightmid').setAttribute('cx',((150+landX)/2).toFixed(1));$('flightmid').setAttribute('cy',((220+landY)/2).toFixed(1));
+$('flightplan').setAttribute('d',`M150 194 L${landX.toFixed(1)} ${landY.toFixed(1)}`);
+$('flightmid').setAttribute('cx',((150+landX)/2).toFixed(1));$('flightmid').setAttribute('cy',((194+landY)/2).toFixed(1));
 const air=Math.max(0,Math.sin(Math.max(0,angle)*Math.PI/180));
 const lift=kind==='ground'?Math.min(7,2+air*12):Math.min(92,(12+air*75)*(speed/130));
 const controlY=118-2*lift;
@@ -210,7 +210,7 @@ const box=$('probabilities');box.replaceChildren(...model.classes.map((c,i)=>{co
 const teams=[...new Set(model.players.batter.map(p=>p.team).filter(Boolean))];$('team').append(new Option('全部球隊',''),...teams.map(t=>new Option(t,t)));$('team').value=teams.find(t=>t==='味全龍')||teams[0];
 $('ballkind').addEventListener('change',()=>{$('angle').value={ground:4,line:18,fly:36,popup:60}[$('ballkind').value];render()});
 for(const id of ['team','batter','pitcher','next','outs','base1','base2','base3','x','z','bearing','distance','angle','speed','fielder','result'])$(id).addEventListener(['x','z','bearing','distance','angle','speed'].includes(id)?'input':'change',id==='team'?teamChange:render);
-$('fieldmap').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width*300-150,dy=220-(e.clientY-r.top)/r.height*240; $('bearing').value=Math.max(-55,Math.min(55,Math.atan2(dx,dy)*180/Math.PI));$('distance').value=Math.max(0,Math.min(150,Math.hypot(dx,dy)/190*150));render()});$('map').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();$('x').value=(-.8+1.6*(e.clientX-r.left)/r.width).toFixed(2);$('z').value=(1.6-1.6*(e.clientY-r.top)/r.height).toFixed(2);render()});teamChange();
+$('fieldmap').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width*300-150,dy=194-(e.clientY-r.top)/r.height*240; $('bearing').value=Math.max(-55,Math.min(55,Math.atan2(dx,dy)*180/Math.PI));$('distance').value=Math.max(0,Math.min(150,Math.hypot(dx,dy)/190*150));render()});$('map').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();$('x').value=(-.8+1.6*(e.clientX-r.left)/r.width).toFixed(2);$('z').value=(1.6-1.6*(e.clientY-r.top)/r.height).toFixed(2);render()});teamChange();
 </script><script>
 /* Batting side by CPBL player ID: cpbl-opendata players.csv (110) and verified CPBL player pages (6). Visual placement only. */
 (()=>{const battingSideById={"cpbl:0000005549":"L","cpbl:0000006927":"R","cpbl:0000007239":"L","cpbl:0000005545":"R","cpbl:0000004633":"L","cpbl:0000003649":"L","cpbl:0000001318":"L","cpbl:0000002707":"L","cpbl:0000006888":"R","cpbl:0000005540":"L","cpbl:0000005542":"L","cpbl:0000002352":"R","cpbl:0000006730":"R","cpbl:0000000772":"L","cpbl:0000000935":"L","cpbl:0000001618":"L","cpbl:0000004636":"R","cpbl:0000000929":"L","cpbl:0000006240":"R","cpbl:0000005531":"L","cpbl:0000005340":"L","cpbl:0000007268":"L","cpbl:0000005571":"L","cpbl:0000006223":"L","cpbl:0000001474":"L","cpbl:0000001804":"L","cpbl:0000000743":"L","cpbl:0000007089":"R","cpbl:0000002285":"R","cpbl:0000002291":"L","cpbl:0000006736":"L","cpbl:0000006225":"R","cpbl:0000005298":"R","cpbl:0000006216":"R","cpbl:0000005522":"L","cpbl:0000003467":"R","cpbl:0000005510":"L","cpbl:0000007085":"L","cpbl:0000007079":"R","cpbl:0000004645":"L","cpbl:0000002297":"R","cpbl:0000007076":"R","cpbl:0000002298":"R","cpbl:0000003345":"R","cpbl:0000006738":"L","cpbl:0000006854":"L","cpbl:0000006929":"L","cpbl:0000006235":"L","cpbl:0000006806":"L","cpbl:0000003609":"R","cpbl:0000001258":"L","cpbl:0000007301":"L","cpbl:0000005291":"R","cpbl:0000003625":"R","cpbl:0000007018":"R","cpbl:0000000362":"R","cpbl:0000001291":"R","cpbl:0000006737":"R","cpbl:0000007288":"L","cpbl:0000007071":"L","cpbl:0000004641":"R","cpbl:0000006217":"R","cpbl:0000002307":"L","cpbl:0000001119":"L","cpbl:0000000132":"L","cpbl:0000005569":"R","cpbl:0000000159":"R","cpbl:0000007037":"L","cpbl:0000005336":"L","cpbl:0000002286":"R","cpbl:0000007278":"R","cpbl:0000006851":"R","cpbl:0000007064":"L","cpbl:0000006716":"R","cpbl:0000007070":"L","cpbl:0000006229":"R","cpbl:0000007302":"L","cpbl:0000002661":"R","cpbl:0000007304":"L","cpbl:0000000361":"L","cpbl:0000006063":"L","cpbl:0000004642":"R","cpbl:0000007822":"R","cpbl:0000000153":"R","cpbl:0000006725":"L","cpbl:0000003533":"L","cpbl:0000006872":"R","cpbl:0000006928":"L","cpbl:0000001473":"R","cpbl:0000006939":"L","cpbl:0000006847":"L","cpbl:0000006858":"L","cpbl:0000006861":"R","cpbl:0000004032":"L","cpbl:0000006726":"R","cpbl:0000006936":"R","cpbl:0000001754":"L","cpbl:0000003183":"L","cpbl:0000005306":"R","cpbl:0000007312":"R","cpbl:0000006931":"R","cpbl:0000006743":"L","cpbl:0000001339":"R","cpbl:0000005548":"L","cpbl:0000007591":"R","cpbl:0000002289":"R","cpbl:0000006868":"L","cpbl:0000003563":"R","cpbl:0000005546":"R","cpbl:0000006843":"L","cpbl:0000007806":"L","cpbl:0000003211":"R","cpbl:0000006732":"R","cpbl:0000001606":"R","cpbl:0000004643":"R","cpbl:0000007605":"R"};
