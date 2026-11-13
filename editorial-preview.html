@@ -59,9 +59,8 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 .dot,.landing-dot{position:absolute;z-index:2;width:17px;height:17px;border:2px solid #f8f5e9;border-radius:50%;background:#e85b3e;transform:translate(-50%,-50%);box-shadow:0 0 0 2px #102832;pointer-events:none}
 .trajectory-panel{margin-top:13px;border:1px solid #51666f;border-radius:0;overflow:hidden;background:#18222c}.trajectory-panel svg{display:block;width:100%;height:145px}.trajectory-panel p{margin:4px 9px 9px}
 .stance-badge{display:inline-block;margin:10px 0 4px;padding:5px 10px;border-left:3px solid var(--red);background:#e4e9e4;font-size:12px;font-weight:700;color:var(--deep)}
-.pitch-map .batter-left{display:none}
-.pitch-map[data-batting-side="left"] .batter-left{display:inline}
-.pitch-map[data-batting-side="left"] .batter-right{display:none}
+.pitch-map .batter-left,.pitch-map .batter-right{display:inline;opacity:.36;transition:opacity .2s ease}
+.pitch-map[data-batting-side="right"] .batter-right,.pitch-map[data-batting-side="left"] .batter-left{opacity:.98}
 .pitch-map,.field-map{border-color:#85786a}
 .dot,.landing-dot{width:23px;height:23px;background:#faf7ec;border:1px solid #e2d9c5;box-shadow:0 2px 8px #121c1ec9,0 0 0 2px #17232a}
 .dot:before,.dot:after,.landing-dot:before,.landing-dot:after{content:"";position:absolute;top:3px;bottom:3px;width:5px;border:1.5px dashed #bb3531;border-top:0;border-bottom:0;border-radius:50%;pointer-events:none}
@@ -77,48 +76,36 @@ footer{font-size:11px;line-height:1.6;color:#536a6c;border-top:2px solid var(--d
 <section class="card"><h2>① 投球前的場上狀況</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
 <section class="card"><h2>② 這球投在哪裡？</h2><p class="help">在圖上點選這球進入本壘的位置，或拖動下面的滑桿。左右位置和高度都以公尺表示。</p><div id="batter-stance" class="stance-badge" aria-live="polite"></div><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
 <svg viewBox="0 0 300 230" preserveAspectRatio="none" aria-hidden="true">
-
+<rect width="300" height="230" fill="#fafbfa"/>
+<path d="M0 210 H300" stroke="#e1e4e2" stroke-width="1.2"/>
+<!-- Both batter silhouettes share the same drawing. The selected hitting side is emphasized. -->
 <defs>
- <linearGradient id="plateSky" x2="0" y2="1"><stop stop-color="#31464d"/><stop offset=".58" stop-color="#556264"/><stop offset="1" stop-color="#8f7458"/></linearGradient>
- <radialGradient id="plateDirt"><stop stop-color="#ac8260"/><stop offset="1" stop-color="#6e503e"/></radialGradient>
- <pattern id="plateGrain" width="19" height="15" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".7" fill="#d0ab84" opacity=".36"/><circle cx="15" cy="9" r=".6" fill="#472f26" opacity=".3"/></pattern>
+ <g id="batterFigure" stroke="#cdd1cf" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M211 82 L281 27 Q285 24 288 28 L290 31 Q290 34 286 37 L218 90Z" fill="#d3d5d4" stroke="#bec4c1"/>
+  <path d="M210 83 L219 91" stroke="#b5bdb9" stroke-width="2.4" fill="none"/>
+  <!-- Back leg moves out from the hips, knee soft, foot planted. -->
+  <path d="M232 140 Q218 144 213 159 L209 176 Q208 184 215 188 L225 189 Q229 180 234 171 L244 153Z" fill="#e8e9e8"/>
+  <path d="M215 184 Q221 188 227 186 L228 197 Q226 204 215 207 L204 208 Q200 210 203 214 Q206 217 225 216 L233 214 Q235 211 232 206 L234 188 Q236 182 229 179Z" fill="#e8e9e8"/>
+  <!-- Front leg and its separated shoe share a consistent floor line. -->
+  <path d="M244 143 Q256 145 266 156 L275 173 Q277 182 270 186 L261 186 L252 171 L239 157Z" fill="#e6e8e6"/>
+  <path d="M263 183 L274 180 Q272 195 267 203 L273 209 Q279 213 275 216 Q271 219 252 217 Q247 215 251 209 L254 200 L252 185Z" fill="#e8e9e8"/>
+  <!-- Head, shoulder, loose jersey and bent arms form one calm silhouette. -->
+  <circle cx="237" cy="67" r="12" fill="#e9eae9"/>
+  <path d="M231 80 Q240 79 249 82 L265 89 Q271 94 273 106 L271 124 Q268 133 278 143 Q281 148 277 155 Q273 159 268 159 Q262 152 253 150 L231 147 Q222 140 223 126 L219 103 Q216 87 231 80Z" fill="#e7e8e7"/>
+  <path d="M226 87 Q218 90 216 101 L213 115 Q210 121 205 119 Q201 116 203 109 L207 93 Q210 83 219 81Z" fill="#e8e9e8"/>
+  <path d="M256 89 Q249 85 239 84 L221 77 Q215 75 213 79 Q212 82 216 85 L234 96 L242 109 Q246 114 252 111 L261 103Z" fill="#ebebea"/>
+  <path d="M216 80 L209 71 Q206 69 204 73 Q202 77 208 82 L215 86Z" fill="#ececeb"/>
+  <path d="M221 95 Q227 98 236 103 M262 143 Q257 150 252 150" fill="none" stroke="#d6d9d7" stroke-width="1"/>
+ </g>
 </defs>
-<rect width="300" height="230" fill="url(#plateSky)"/>
-<path d="M0 86 Q150 68 300 86 V230 H0Z" fill="url(#plateDirt)"/>
-<path d="M0 86 Q150 68 300 86 V230 H0Z" fill="url(#plateGrain)"/>
-<path d="M0 90 Q150 77 300 90" stroke="#c29b74" stroke-width="1" fill="none" opacity=".8"/>
-<path d="M0 179 Q150 157 300 179 M0 209 Q150 189 300 209" stroke="#c39a71" stroke-width="1" opacity=".32" fill="none"/>
-<!-- Batter boxes, seen from the mound; strike-zone anchors stay at x=109..191. -->
-<path d="M16 88 H93 V211 H16Z M207 88 H284 V211 H207Z" fill="#8b6349" opacity=".25" stroke="#eee7d7" stroke-width="1.5"/>
-<path d="M109 79 V165 M191 79 V165 M109 79 H191 M109 165 H191" stroke="#faf3dc" stroke-width="2.2" fill="none"/>
-<path d="M136.3 79 V165 M163.7 79 V165 M109 107.7 H191 M109 136.3 H191" stroke="#fbf5df" stroke-width=".8" stroke-dasharray="4 3" opacity=".72"/>
-<path d="M127 203 L173 203 L169 218 L150 228 L131 218Z" fill="#f8f4e7" stroke="#413d34" stroke-width="1.5"/>
-<path d="M126 204 L174 204" stroke="#fff" stroke-width="2"/>
-
-<!-- Pale, layered batter illustration based on the supplied pose; mirror for left-handed hitters. -->
-<defs><g id="batterFigure" stroke-linejoin="round" stroke-linecap="round">
-<!-- Muted bat and lightly outlined athletic silhouette, referenced from the supplied graphic. -->
-<path d="M211 83 L281 25 Q286 22 289 26 L291 30 Q292 33 287 36 L218 91Z" fill="#c5cac7" stroke="#aeb5b0" stroke-width="1.1"/>
-<path d="M210 84 L218 92" stroke="#aeb5b0" stroke-width="2.2" fill="none"/>
-<!-- Bent back knee and planted back foot. -->
-<path d="M233 141 Q221 143 216 153 L208 169 Q205 177 211 183 Q216 187 224 185 L230 174 L241 155 L244 146Z" fill="#e4e6e4" stroke="#c5cbc7" stroke-width="1.3"/>
-<path d="M211 178 Q216 183 224 183 L226 192 L222 202 L210 205 Q203 207 202 211 Q202 214 209 215 L224 215 Q230 214 231 209 Q229 205 228 202 L234 188 L227 176Z" fill="#e5e7e5" stroke="#c5cbc7" stroke-width="1.3"/>
-<!-- Bent front knee and a second foot on the same ground line. -->
-<path d="M242 145 Q254 143 263 152 L274 170 Q278 177 272 184 Q267 188 260 184 L254 171 L242 159 L235 151Z" fill="#e5e7e4" stroke="#c5cbc7" stroke-width="1.3"/>
-<path d="M262 179 Q268 181 274 176 L272 190 L266 201 L273 206 Q279 211 274 214 Q271 216 257 216 Q250 216 249 212 Q248 209 254 203 L255 189 L254 182Z" fill="#e7e9e6" stroke="#c5cbc7" stroke-width="1.3"/>
-<path d="M227 55 Q230 47 240 48 Q251 49 252 59 Q254 69 248 76 Q242 81 234 78 Q226 75 226 66Z" fill="#e7e9e7" stroke="#c9cecb" stroke-width="1.15"/>
-<path d="M228 77 L230 85 L239 89 L246 79 Q254 80 263 87 Q272 92 274 106 L271 122 Q269 133 276 139 Q281 145 279 153 Q276 159 269 160 Q264 156 257 153 Q245 146 229 147 Q222 138 222 123 L219 98 Q218 85 228 77Z" fill="#e3e5e3" stroke="#c2c8c4" stroke-width="1.35"/>
-<path d="M247 84 Q259 86 264 97 Q258 101 250 100 L239 91Z" fill="#d5dad6" opacity=".67"/>
-<path d="M224 184 Q225 191 223 199 M267 184 Q267 192 264 200" fill="none" stroke="#cbd0cc" stroke-width="1"/>
-<path d="M222 87 Q215 90 212 96 L207 105 Q203 110 206 115 Q209 119 215 117 L230 110 Q232 111 235 120 L243 118 Q243 107 235 99 L225 93Z" fill="#e7e9e6" stroke="#c5cbc7" stroke-width="1.2"/>
-<path d="M257 90 Q253 86 246 85 L226 77 Q219 73 216 76 Q212 79 215 84 L229 94 L240 108 Q245 113 251 111 L258 104Z" fill="#e5e7e5" stroke="#c3cac5" stroke-width="1.2"/>
-<path d="M218 77 L211 70 Q207 68 205 72 Q203 76 209 81 L216 85Z" fill="#e6e8e5" stroke="#bdc5bf" stroke-width="1"/>
-<path d="M213 78 L217 72" fill="none" stroke="#bec5c0" stroke-width=".9"/>
-</g></defs>
-<g class="batter-right" opacity=".96"><use href="#batterFigure"/></g>
-<g class="batter-left" opacity=".96" transform="translate(300 0) scale(-1 1)"><use href="#batterFigure"/></g>
-<text x="150" y="19" text-anchor="middle" fill="#f6f1e6" font-size="11" font-family="Arial, sans-serif" letter-spacing=".7">投手視角 · 本壘進球位置</text>
-<text x="7" y="122" fill="#fcf5e3" font-size="11">左</text><text x="279" y="122" fill="#fcf5e3" font-size="11">右</text>
+<g class="batter-right"><use href="#batterFigure"/></g>
+<g class="batter-left" transform="translate(300 0) scale(-1 1)"><use href="#batterFigure"/></g>
+<!-- Fixed pitch-zone bounds and home plate keep click-coordinate calculations intact. -->
+<rect x="109" y="79" width="82" height="86" fill="#ffffff" fill-opacity=".3" stroke="#303b3c" stroke-width="2"/>
+<path d="M136.3 79 V165 M163.7 79 V165 M109 107.7 H191 M109 136.3 H191" fill="none" stroke="#bdc7c6" stroke-width=".8" stroke-dasharray="3 4"/>
+<path d="M127 202 L173 202 L169 216 L150 225 L131 216Z" fill="#e4e6e4" stroke="#cbd0ce" stroke-width="1.1"/>
+<text x="150" y="20" text-anchor="middle" fill="#455052" font-size="11" font-family="Arial, sans-serif">投手視角 · 本壘進球位置</text>
+<text x="7" y="119" fill="#576263" font-size="11">左</text><text x="279" y="119" fill="#576263" font-size="11">右</text>
 </svg><span id="dot" class="dot"><svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><defs><radialGradient id="pitchMarkerBall" cx="35%" cy="28%" r="72%"><stop stop-color="#fffefa"/><stop offset=".68" stop-color="#f5f1e6"/><stop offset="1" stop-color="#d6cdbb"/></radialGradient><clipPath id="pitchMarkerBall-clip"><circle cx="24" cy="24" r="21"/></clipPath></defs><circle cx="24" cy="24" r="21" fill="url(#pitchMarkerBall)" stroke="#c6baa6" stroke-width="1.2"/><g clip-path="url(#pitchMarkerBall-clip)" fill="none" stroke="#b63b35" stroke-linecap="round"><path d="M9 8 C23 16 23 32 9 40 M39 8 C25 16 25 32 39 40" stroke-width="1.8"/><path d="M10 12 l6 -2 M13 16 l6 -1 M15 20 l6 -.3 M16 24 l6 1 M15 28 l6 2 M12 32 l6 2.5 M9 36 l6 3 M38 12 l-6 -2 M35 16 l-6 -1 M33 20 l-6 -.3 M32 24 l-6 1 M33 28 l-6 2 M36 32 l-6 2.5 M39 36 l-6 3" stroke-width="1.1"/></g><path d="M15 8 Q22 4 28 6" stroke="#fff" stroke-width="1.2" opacity=".85" fill="none"/></svg></span></div><div class="coordinates" id="coords"></div><label for="x">左右 x（公尺）</label><input id="x" type="range" min="-0.8" max="0.8" step="0.025" value="0"><label for="z">高度 z（公尺）</label><input id="z" type="range" min="0" max="1.6" step="0.025" value="0.8"><p class="help" id="sample"></p></section>
 <section class="card"><h2>③ 球打到哪裡？誰來守？</h2>
 <p class="help">在球場圖上點選球落下的位置，或用下面的滑桿調整方向和距離。方向往右調，落點就會往右外野移動。</p>
