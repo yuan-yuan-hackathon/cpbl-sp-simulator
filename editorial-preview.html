@@ -121,7 +121,7 @@ input[type=range],input[type=checkbox]{accent-color:#7899b5}
 .metric-guide{color:inherit;text-decoration:underline;text-decoration-color:#557a98;text-underline-offset:.2em}
 .metric-guide:hover,.metric-guide:focus-visible{color:#23527b}
 .metric-guide:focus-visible{outline:2px solid #23527b;outline-offset:3px}
-</style></head><body><main><header><h1>CPBL單球事件SP計算器</h1><p>這一球，得分機會變了多少？</p></header>
+</style></head><body><main><header><h1>CPBL單球事件SP計算器</h1><p>SP 衡量這個打席結果比模型預期多創造或少掉多少得分價值，單位是分（runs）。進攻方 SP 為正，表示結果比預期更有利於得分。<a class="metric-guide" href="metric-guide.html#scenario-sp" target="_blank" rel="noopener">查看 SP 計算方式</a></p></header>
 <div class="layout"><div>
 <section class="card"><h2>投球前的場上狀況</h2><label for="team">進攻球隊</label><select id="team"></select><label for="defense-team">守備球隊</label><select id="defense-team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
 <section class="card"><h2>這球投在哪裡？</h2><p class="help">在圖上點選這球進入本壘的位置，或拖動下面的滑桿。左右位置和高度都以公尺表示。</p><div id="batter-stance" class="stance-badge" aria-live="polite"></div><div id="map" class="pitch-map" role="img" aria-label="從投手方向看本壘的可點選進壘位置圖">
