@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>指標說明｜CPBL SP 試算器</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: #111; font: 16px/1.65 Arial, sans-serif; }
+main { max-width: 760px; margin: auto; padding: 24px 20px 48px; }
+header { padding-bottom: 16px; border-bottom: 4px solid #7899b5; }
+h1 { margin: 10px 0 0; font-size: clamp(27px, 5vw, 36px); }
+h2 { margin: 0; font-size: 21px; line-height: 1.4; }
+a { color: #23527b; text-underline-offset: .18em; }
+a:focus-visible { outline: 2px solid #23527b; outline-offset: 3px; }
+nav ul { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 0; list-style: none; }
+section { scroll-margin-top: 16px; border-top: 1px solid #7899b5; padding: 18px 0 12px; }
+section:target { background: #f0f5fa; outline: 8px solid #f0f5fa; }
+p { margin: 8px 0; }
+</style>
+</head>
+<body><main>
+<header><a href="editorial-preview.html">返回 CPBL SP 試算器</a><h1>指標說明</h1></header>
+<nav aria-label="指標目錄"><ul>
+<li><a href="#scenario-sp">情境事件 SP · 進攻方</a></li>
+<li><a href="#re24">事件 RE24 · 進攻方</a></li>
+<li><a href="#hit-probability">進壘位置安打機率</a></li>
+<li><a href="#out-probability">預測擊球出局機率</a></li>
+<li><a href="#fielder-sp">選定野手 SP · 防守方</a></li>
+<li><a href="#pitcher-sp">投手 SP</a></li>
+</ul></nav>
+<section id="scenario-sp">
+<h2>情境事件 SP · 進攻方</h2>
+<p>這個打席結果比模型在知道進壘位置後的預期好多少？</p>
+<p>情境事件 SP＝本次打席直接得分＋打席後預期得分（含下一棒）－知道進壘位置後的預期得分。</p>
+<p>例如事件價值是 1.1026 runs，事前預期是 0.3548 runs，進攻方 SP 就是 +0.7478 runs。正值代表這個結果讓進攻方的得分價值高於預期。</p>
+</section>
+<section id="re24">
+<h2>事件 RE24 · 進攻方</h2>
+<p>同一次打席，若以打席前的壘包與出局狀態作為基準，得分價值增加多少？</p>
+<p>事件 RE24＝本次打席直接得分＋事件後的 RE24－事件前的 RE24。</p>
+<p>RE24 以 3 種出局數和 8 種壘包狀態組成 24 種情境。每種情境的數值代表該半局從當下到結束預期還能得幾分。此處依該事件可能造成的壘包與出局狀態變化取加權平均。</p>
+</section>
+<section id="hit-probability">
+<h2>這個位置的球被打進場內後，形成安打的機率</h2>
+<p>在指定進壘位置，以球已被打進場內為條件，估計形成安打的比例。</p>
+<p>模型依進壘的左右位置與高度查對應區間的安打率，並用它調整打席結果模型中安打與擊球出局的相對機率。</p>
+<p>這個百分比適用於已形成場內擊球的情況。若進壘位置超出分區範圍，畫面會顯示模型的整體基準率。</p>
+</section>
+<section id="out-probability">
+<h2>預測擊球出局機率</h2>
+<p>給定這顆擊球的條件，估計它形成出局的機率。</p>
+<p>模型依擊球初速、仰角、落點方向及距本壘的距離查對應區間的出局率。</p>
+<p>畫面會顯示同組樣本數。若輸入超出分區範圍，模型會使用整體基準率。目前更換野手姓名不會改變這個機率。</p>
+</section>
+<section id="fielder-sp">
+<h2>選定野手 SP · 防守方</h2>
+<p>衡量這次守備結果相對於模型預期的得分價值。</p>
+<p>擊球出局時，以 1 減去預測出局機率。形成一至三壘安打時，以 0 減去預測出局機率。再乘上安打和出局的得分價值差。</p>
+<p>得分價值差以一至三壘安打的平均事件價值減去擊球出局價值計算，最低為零。目前姓名用於指定要查看的野手，分數由擊球條件和結果決定。</p>
+</section>
+<section id="pitcher-sp">
+<h2>投手 SP</h2>
+<p>把同一打席的進攻方 SP 轉成防守方角度後，扣除已分配給野手的部分。</p>
+<p>投手 SP＝－進攻方情境事件 SP－野手 SP。</p>
+<p>例如進攻方 SP 為 +0.40、野手 SP 為 −0.10，則投手 SP 為 −0.30 runs。</p>
+</section>
+</main></body></html>
