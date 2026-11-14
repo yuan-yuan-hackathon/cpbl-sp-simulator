@@ -97,23 +97,22 @@ body,header p,label,select,.bases label,.help,.coordinates,.metric small,.layout
 a,.positive,.negative,.warn{color:#111!important}
 body,body *{font-family:Arial,sans-serif!important}
 
-/* Dark navy theme on the previous column layout. */
-:root{--paper:#071d33;--deep:#0b2745;--ink:#f5f0e6;--line:#fff;--red:#fff;--blue:#fff;--color-large:#f5f0e6;--color-medium:#f5f0e6;--color-body:#f5f0e6}
-body{background:var(--paper)!important;color:#f5f0e6!important}
-header,.layout>div:first-child,.layout>div:last-child>.card,.layout>div:last-child>.card:first-child{background:#0d2b49!important;border-color:#fff!important}
+/* Misty blue and ivory palette inspired by the reference photo. */
+:root{--paper:#7d9bb6;--deep:#5f809d;--ink:#182c3d;--line:#d9e4eb;--red:#506e86;--blue:#506e86;--color-large:#182c3d;--color-medium:#182c3d;--color-body:#182c3d}
+body{background:var(--paper)!important;color:var(--ink)!important}
+header{background:#5f809d!important;border:1px solid #fff!important;border-bottom:4px solid #fff!important}
 header:before{display:none!important}
-header{border-bottom:4px solid #fff!important}
-.layout>div:first-child{border-top:4px solid #fff!important}
-.layout>div:last-child>.card:first-child,.layout>div:last-child>.card:not(:first-child){border-top:4px solid #fff!important}
-h2,.layout>div:last-child>.card:first-child h2,.layout>div:last-child>.card:first-child #explanation{border-bottom-color:#fff!important;border-top-color:#fff!important}
-.metric,.layout>div:last-child>.card:first-child .metric,.layout>div:last-child>.card:first-child .metric:first-child,th,td{border-color:#fff!important}
-body,body :not(svg):not(svg *),a,.positive,.negative,.warn{color:#f5f0e6!important}
-select,.bases label,.stance-badge{background:#173b5c!important;border-color:#fff!important;color:#f5f0e6!important}
-select option{background:#173b5c;color:#f5f0e6}
-.bases label:has(input:checked){background:#285374!important;border-color:#fff!important}
-select:focus-visible,input:focus-visible{outline-color:#fff}
-input[type=range],input[type=checkbox]{accent-color:#f5f0e6}
-.bar{background:#315370}.bar span{background:#f5f0e6}
+.layout>div:first-child,.layout>div:last-child>.card,.layout>div:last-child>.card:first-child{background:#f6f5ef!important;border-color:#fff!important}
+.layout>div:first-child,.layout>div:last-child>.card:first-child,.layout>div:last-child>.card:not(:first-child){border-top-color:#fff!important}
+h2,.layout>div:last-child>.card:first-child h2,.layout>div:last-child>.card:first-child #explanation,.metric,.layout>div:last-child>.card:first-child .metric,.layout>div:last-child>.card:first-child .metric:first-child,th,td{border-color:#c7d5df!important}
+body,body :not(svg):not(svg *),a,.positive,.negative,.warn{color:#182c3d!important}
+header,header :not(svg):not(svg *){color:#f6f5ef!important}
+select,.bases label,.stance-badge{background:#fff!important;border-color:#a5bac9!important;color:#182c3d!important}
+select option{background:#fff;color:#182c3d}
+.bases label:has(input:checked){background:#dce9f1!important;border-color:#5f809d!important}
+select:focus-visible,input:focus-visible{outline-color:#5f809d}
+input[type=range],input[type=checkbox]{accent-color:#5f809d}
+.bar{background:#d5e1e9}.bar span{background:#5f809d}
 </style></head><body><main><header><h1>CPBL單球事件SP計算器</h1><p>這一球，得分機會變了多少？</p></header>
 <div class="layout"><div>
 <section class="card"><h2>投球前的場上狀況</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
