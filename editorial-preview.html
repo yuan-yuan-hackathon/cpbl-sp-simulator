@@ -200,7 +200,7 @@ function teamChange(){const t=$('team').value,b=model.players.batter.filter(p=>!
 function showNumber(id,v){$(id).textContent=v.toFixed(4)}
 function render(){const b=batters[$('batter').value],p=pitchers[$('pitcher').value],next=batters[$('next').value];if(!b||!p||!next)return;
 const outs=+$('outs').value,bases=($('base1').checked?1:0)+($('base2').checked?2:0)+($('base3').checked?4:0),s=8*outs+bases;
-const x=+$('x').value,z=+$('z').value,loc=locationCell(x,z);$('coords').textContent=`x = ${x.toFixed(2)} m, z = ${z.toFixed(2)} m`;$('dot').style.left=((x+.8)/1.6*100)+'%';$('dot').style.top=((1.6-z)/1.6*100)+'%';$('sample').textContent=`此位置網格：${loc.n} 球；以 80 球聯盟先驗平滑。`;
+const x=+$('x').value,z=+$('z').value,loc=locationCell(x,z);$('coords').textContent=`x = ${x.toFixed(2)} m, z = ${z.toFixed(2)} m`;$('dot').style.left=((x+.8)/1.6*100)+'%';$('dot').style.top=((1.6-z)/1.6*100)+'%';$('sample').textContent=`這個位置有 ${loc.n} 球歷史紀錄；估計機率時，也參考相當於 80 球的聯盟整體資料。`;
 const q=locationProbs(probs(b,p,s),loc.hit_rate),nextValue=continuation(next,p,model.states),key=$('result').value,k=model.classes.indexOf(key);
 const branch=model.classes.map((_,j)=>model.runs[s][j]+model.transitions[s][j].reduce((a,t,i)=>a+t*(nextValue[i]||0),0));
 const exp=q.reduce((a,t,j)=>a+t*branch[j],0),value=branch[k],actual=model.runs[s][k],after=value-actual;
