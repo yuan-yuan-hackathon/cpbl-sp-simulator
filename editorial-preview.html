@@ -96,6 +96,21 @@ h2,h3,.metric b,.metric b.positive,.metric b.negative,.layout>div:last-child>.ca
 body,header p,label,select,.bases label,.help,.coordinates,.metric small,.layout>div:last-child>.card:first-child .metric small,.layout>div:last-child>.card:first-child #explanation,.breakdown th,#probabilities,footer,.stance-badge,summary,.warn,.layout>div:last-child>.card:first-child .warn{color:var(--color-body)!important}
 a,.positive,.negative,.warn{color:#111!important}
 body,body *{font-family:Arial,sans-serif!important}
+
+/* Balance the input and results columns without changing the current visual language. */
+:root{--red:#315e4d}
+header:before{display:none}
+header{border-bottom-color:var(--red)}
+.bases label:has(input:checked){background:#e7f0e9;border-color:var(--red)}
+@media(min-width:1101px){
+  .layout{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);align-items:stretch}
+  .layout>div:first-child{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start}
+  .layout>div:first-child>.card:first-child,.layout>div:first-child>.card:last-child{grid-column:1/-1}
+  .layout>div:first-child>.card:nth-child(2){border-right:1px solid var(--line)}
+  .layout>div:last-child{display:flex;flex-direction:column;justify-content:space-between}
+  .layout>div:last-child>.card{width:100%}
+}
+@media(min-width:901px) and (max-width:1100px){.layout{grid-template-columns:1fr}.layout>div:first-child{display:block}}
 </style></head><body><main><header><h1>CPBL單球事件SP計算器</h1><p>這一球，得分機會變了多少？</p></header>
 <div class="layout"><div>
 <section class="card"><h2>投球前的場上狀況</h2><label for="team">進攻球隊</label><select id="team"></select><label for="batter">打者</label><select id="batter"></select><label for="pitcher">對方投手</label><select id="pitcher"></select><label for="next">下一棒打者</label><select id="next"></select><label for="outs">出局數</label><select id="outs"><option value="0">0 出局</option><option value="1">1 出局</option><option value="2" selected>2 出局</option></select><label>壘上跑者</label><div class="bases"><label><input id="base1" type="checkbox">一壘</label><label><input id="base2" type="checkbox" checked>二壘</label><label><input id="base3" type="checkbox">三壘</label></div></section>
