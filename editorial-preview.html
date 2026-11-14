@@ -245,7 +245,7 @@ showNumber('pitchersp',pitcherSp);$('pitchersp').className=pitcherSp>=0?'positiv
 $('fieldersp').textContent=relevant?fielderSp.toFixed(4):'—';$('fieldersp').className=fielderSp>=0?'positive':'negative';
 $('pout').textContent=relevant?(spot.p_out*100).toFixed(1)+'%':'—';
 const fName=batters[$('fielder').value]?.name||'未指定';
-$('rolewarning').textContent=relevant?`${fName}：野手 SP =（是否出局 − 預測擊球出局機率）× 安打與出局的得分價值差。`:'此結果沒有可辨識的接球機會，野手 SP 不計。';
+$('rolewarning').textContent=relevant?'':'此結果沒有可辨識的接球機會，野手 SP 不計。';
 showNumber('sp',sp);$('sp').className=sp>=0?'positive':'negative';showNumber('re24',reEvent);$('re24').className=reEvent>=0?'positive':'negative';$('hit').textContent=(loc.hit_rate*100).toFixed(1)+'%';
 showNumber('before',model.states[s]);showNumber('runs',actual);showNumber('after',after);showNumber('expected',exp);
 $('explanation').textContent=`${b.name} 對 ${p.name}，${outs} 出局、壘包狀態 ${bases}；發生「${names[key]}」時，考量下一棒 ${next.name} 的事件後價值是 ${value.toFixed(4)} runs，相對這個位置的事前預期 ${exp.toFixed(4)} runs，進攻方 SP 為 ${sp>=0?'+':''}${sp.toFixed(4)} runs。`;
