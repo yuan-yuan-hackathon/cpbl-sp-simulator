@@ -1,0 +1,880 @@
+{
+  "version": "v06-refit-linux",
+  "python": "3.12.14",
+  "sklearn": "1.8.0",
+  "source_sha256": "c1b93944ff05b6e0c3a053e33e99731183ff4604d230a39f1c10bf57051b69f5",
+  "classes": [
+    "BALL",
+    "STRIKE",
+    "FOUL",
+    "HBP",
+    "CONTACT_OUT",
+    "1B",
+    "2B",
+    "3B",
+    "HR",
+    "OTHER"
+  ],
+  "choices": {
+    "baseline": {
+      "leaves": 7,
+      "validation_log_loss": 1.518764629632522,
+      "features": [
+        "pa_outs_before_audited",
+        "pa_bases_before_audited",
+        "balls_before",
+        "strikes_before",
+        "history_exit",
+        "history_angle",
+        "history_direction",
+        "history_n",
+        "pitcher_rate_BALL",
+        "pitcher_rate_STRIKE",
+        "pitcher_rate_FOUL",
+        "pitcher_rate_HBP",
+        "pitcher_rate_CONTACT_OUT",
+        "pitcher_rate_1B",
+        "pitcher_rate_2B",
+        "pitcher_rate_3B",
+        "pitcher_rate_HR",
+        "pitcher_rate_OTHER"
+      ]
+    },
+    "pitch": {
+      "leaves": 15,
+      "validation_log_loss": 1.1261581337079734,
+      "features": [
+        "pa_outs_before_audited",
+        "pa_bases_before_audited",
+        "balls_before",
+        "strikes_before",
+        "history_exit",
+        "history_angle",
+        "history_direction",
+        "history_n",
+        "pitcher_rate_BALL",
+        "pitcher_rate_STRIKE",
+        "pitcher_rate_FOUL",
+        "pitcher_rate_HBP",
+        "pitcher_rate_CONTACT_OUT",
+        "pitcher_rate_1B",
+        "pitcher_rate_2B",
+        "pitcher_rate_3B",
+        "pitcher_rate_HR",
+        "pitcher_rate_OTHER",
+        "plate_x_m",
+        "plate_z_m",
+        "velocity_kph",
+        "spin_rpm",
+        "release_height_m",
+        "release_side_m",
+        "extension_m"
+      ]
+    }
+  },
+  "validation_candidates": {
+    "baseline": {
+      "7": {
+        "validation_log_loss": 1.518764629632522,
+        "validation_brier": 0.7323473432812514
+      },
+      "15": {
+        "validation_log_loss": 1.520631889915667,
+        "validation_brier": 0.7329250781842221
+      }
+    },
+    "pitch": {
+      "7": {
+        "validation_log_loss": 1.1360461289792023,
+        "validation_brier": 0.5466587981766702
+      },
+      "15": {
+        "validation_log_loss": 1.1261581337079734,
+        "validation_brier": 0.5429524600236993
+      }
+    }
+  },
+  "splits": {
+    "train": {
+      "n": 37958,
+      "games": 144,
+      "start": "2026-03-28",
+      "end": "2026-06-30"
+    },
+    "validation": {
+      "n": 17128,
+      "games": 63,
+      "start": "2026-07-01",
+      "end": "2026-08-18"
+    },
+    "test": {
+      "n": 23906,
+      "games": 88,
+      "start": "2026-08-23",
+      "end": "2026-10-06"
+    }
+  },
+  "excluded_from_raw": 3712,
+  "test": {
+    "baseline": {
+      "n": 23906,
+      "log_loss": 1.5093126842703417,
+      "multiclass_brier_sum": 0.7301766561933225,
+      "top_label_calibration": [
+        {
+          "n": 3866,
+          "predicted_confidence": 0.2799233392685481,
+          "actual_accuracy": 0.28634247284014486
+        },
+        {
+          "n": 11025,
+          "predicted_confidence": 0.35058405941359105,
+          "actual_accuracy": 0.3490249433106576
+        },
+        {
+          "n": 8535,
+          "predicted_confidence": 0.43591563295155206,
+          "actual_accuracy": 0.44007029876977155
+        },
+        {
+          "n": 396,
+          "predicted_confidence": 0.5364289042991797,
+          "actual_accuracy": 0.49747474747474746
+        },
+        {
+          "n": 84,
+          "predicted_confidence": 0.6244695741475409,
+          "actual_accuracy": 0.7261904761904762
+        }
+      ],
+      "class_calibration": [
+        {
+          "class": "BALL",
+          "mean_prediction": 0.35397783298326707,
+          "actual_rate": 0.364050865891408,
+          "bins": [
+            {
+              "n": 1,
+              "predicted": 0.19562822472202968,
+              "actual": 0.0
+            },
+            {
+              "n": 5222,
+              "predicted": 0.2733580430424619,
+              "actual": 0.28226733052470315
+            },
+            {
+              "n": 12628,
+              "predicted": 0.34790235845766887,
+              "actual": 0.3590433956287615
+            },
+            {
+              "n": 5912,
+              "predicted": 0.43425455673064134,
+              "actual": 0.44401217861975645
+            },
+            {
+              "n": 143,
+              "predicted": 0.5167749951785298,
+              "actual": 0.48951048951048953
+            }
+          ]
+        },
+        {
+          "class": "STRIKE",
+          "mean_prediction": 0.27286940984170677,
+          "actual_rate": 0.26198443905295743,
+          "bins": [
+            {
+              "n": 4,
+              "predicted": 0.09768955154931253,
+              "actual": 0.25
+            },
+            {
+              "n": 7010,
+              "predicted": 0.16105199948425358,
+              "actual": 0.16005706134094153
+            },
+            {
+              "n": 7000,
+              "predicted": 0.23460061849895963,
+              "actual": 0.21671428571428572
+            },
+            {
+              "n": 6453,
+              "predicted": 0.3429585358405081,
+              "actual": 0.3257399659073299
+            },
+            {
+              "n": 3102,
+              "predicted": 0.4344141230796818,
+              "actual": 0.42972275950999356
+            },
+            {
+              "n": 253,
+              "predicted": 0.5475376355412861,
+              "actual": 0.5019762845849802
+            },
+            {
+              "n": 84,
+              "predicted": 0.6244695741475409,
+              "actual": 0.7261904761904762
+            }
+          ]
+        },
+        {
+          "class": "FOUL",
+          "mean_prediction": 0.1725818875977563,
+          "actual_rate": 0.17179787501045762,
+          "bins": [
+            {
+              "n": 4219,
+              "predicted": 0.0860647732233609,
+              "actual": 0.07537331121118748
+            },
+            {
+              "n": 11133,
+              "predicted": 0.15476908595637692,
+              "actual": 0.15988502649779934
+            },
+            {
+              "n": 8510,
+              "predicted": 0.23809157979146234,
+              "actual": 0.23478260869565218
+            },
+            {
+              "n": 44,
+              "predicted": 0.30526701602077005,
+              "actual": 0.25
+            }
+          ]
+        },
+        {
+          "class": "HBP",
+          "mean_prediction": 0.0033837042178264222,
+          "actual_rate": 0.0033046097214088515,
+          "bins": [
+            {
+              "n": 23906,
+              "predicted": 0.0033837042178264222,
+              "actual": 0.0033046097214088515
+            }
+          ]
+        },
+        {
+          "class": "CONTACT_OUT",
+          "mean_prediction": 0.1261568562210392,
+          "actual_rate": 0.12603530494436543,
+          "bins": [
+            {
+              "n": 6802,
+              "predicted": 0.07405603451420963,
+              "actual": 0.06512790355777713
+            },
+            {
+              "n": 15809,
+              "predicted": 0.1412426995626906,
+              "actual": 0.14422164589790626
+            },
+            {
+              "n": 1295,
+              "predicted": 0.2156531433729215,
+              "actual": 0.22393822393822393
+            }
+          ]
+        },
+        {
+          "class": "1B",
+          "mean_prediction": 0.04638330877271357,
+          "actual_rate": 0.04864887475947461,
+          "bins": [
+            {
+              "n": 23864,
+              "predicted": 0.046280833903281825,
+              "actual": 0.04852497485752598
+            },
+            {
+              "n": 42,
+              "predicted": 0.10460855363269034,
+              "actual": 0.11904761904761904
+            }
+          ]
+        },
+        {
+          "class": "2B",
+          "mean_prediction": 0.009567970333962056,
+          "actual_rate": 0.008993558102568393,
+          "bins": [
+            {
+              "n": 23906,
+              "predicted": 0.009567970333962056,
+              "actual": 0.008993558102568393
+            }
+          ]
+        },
+        {
+          "class": "3B",
+          "mean_prediction": 0.0013949865910784472,
+          "actual_rate": 0.0011294235756713795,
+          "bins": [
+            {
+              "n": 23906,
+              "predicted": 0.0013949865910784472,
+              "actual": 0.0011294235756713795
+            }
+          ]
+        },
+        {
+          "class": "HR",
+          "mean_prediction": 0.003531847039092374,
+          "actual_rate": 0.0020496946373295406,
+          "bins": [
+            {
+              "n": 23906,
+              "predicted": 0.003531847039092374,
+              "actual": 0.0020496946373295406
+            }
+          ]
+        },
+        {
+          "class": "OTHER",
+          "mean_prediction": 0.010152196401557843,
+          "actual_rate": 0.012005354304358739,
+          "bins": [
+            {
+              "n": 23905,
+              "predicted": 0.01014773644128447,
+              "actual": 0.012005856515373352
+            },
+            {
+              "n": 1,
+              "predicted": 0.1167675467365618,
+              "actual": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    "pitch": {
+      "n": 23906,
+      "log_loss": 1.1144428794136936,
+      "multiclass_brier_sum": 0.5378760230407457,
+      "top_label_calibration": [
+        {
+          "n": 1134,
+          "predicted_confidence": 0.28244599464794995,
+          "actual_accuracy": 0.2980599647266314
+        },
+        {
+          "n": 6908,
+          "predicted_confidence": 0.34861420146873207,
+          "actual_accuracy": 0.3430804863925883
+        },
+        {
+          "n": 3372,
+          "predicted_confidence": 0.4457329663355744,
+          "actual_accuracy": 0.44276393831553973
+        },
+        {
+          "n": 2928,
+          "predicted_confidence": 0.5496155082885283,
+          "actual_accuracy": 0.5437158469945356
+        },
+        {
+          "n": 2483,
+          "predicted_confidence": 0.6480141100757069,
+          "actual_accuracy": 0.6810310108739428
+        },
+        {
+          "n": 2173,
+          "predicted_confidence": 0.7502284896288625,
+          "actual_accuracy": 0.7988955361251726
+        },
+        {
+          "n": 2645,
+          "predicted_confidence": 0.8534497585575646,
+          "actual_accuracy": 0.8933837429111531
+        },
+        {
+          "n": 2263,
+          "predicted_confidence": 0.9347512726293333,
+          "actual_accuracy": 0.9699513919575784
+        }
+      ],
+      "class_calibration": [
+        {
+          "class": "BALL",
+          "mean_prediction": 0.3508733023224272,
+          "actual_rate": 0.364050865891408,
+          "bins": [
+            {
+              "n": 10488,
+              "predicted": 0.024156913689958367,
+              "actual": 0.017257818459191457
+            },
+            {
+              "n": 1559,
+              "predicted": 0.14666482574643555,
+              "actual": 0.15330339961513792
+            },
+            {
+              "n": 1212,
+              "predicted": 0.24838961638473664,
+              "actual": 0.25577557755775576
+            },
+            {
+              "n": 1083,
+              "predicted": 0.3495702966999988,
+              "actual": 0.3767313019390582
+            },
+            {
+              "n": 1026,
+              "predicted": 0.449149050023222,
+              "actual": 0.5
+            },
+            {
+              "n": 1072,
+              "predicted": 0.549967487459972,
+              "actual": 0.5466417910447762
+            },
+            {
+              "n": 1132,
+              "predicted": 0.6507610573616424,
+              "actual": 0.6987632508833922
+            },
+            {
+              "n": 1535,
+              "predicted": 0.753567609862835,
+              "actual": 0.7928338762214984
+            },
+            {
+              "n": 2536,
+              "predicted": 0.8545797101351106,
+              "actual": 0.8923501577287066
+            },
+            {
+              "n": 2263,
+              "predicted": 0.9347512726293333,
+              "actual": 0.9699513919575784
+            }
+          ]
+        },
+        {
+          "class": "STRIKE",
+          "mean_prediction": 0.2735975209971834,
+          "actual_rate": 0.26198443905295743,
+          "bins": [
+            {
+              "n": 5224,
+              "predicted": 0.050293223543520886,
+              "actual": 0.030627871362940276
+            },
+            {
+              "n": 5161,
+              "predicted": 0.15025950049898026,
+              "actual": 0.14202673900406898
+            },
+            {
+              "n": 4690,
+              "predicted": 0.24822869234755332,
+              "actual": 0.22281449893390193
+            },
+            {
+              "n": 2975,
+              "predicted": 0.3459288872458347,
+              "actual": 0.3270588235294118
+            },
+            {
+              "n": 1910,
+              "predicted": 0.4489714515397673,
+              "actual": 0.4356020942408377
+            },
+            {
+              "n": 1849,
+              "predicted": 0.5495429449274737,
+              "actual": 0.5413737155219037
+            },
+            {
+              "n": 1350,
+              "predicted": 0.6457401314871497,
+              "actual": 0.6666666666666666
+            },
+            {
+              "n": 638,
+              "predicted": 0.7421947128903863,
+              "actual": 0.8134796238244514
+            },
+            {
+              "n": 109,
+              "predicted": 0.8271602429552155,
+              "actual": 0.9174311926605505
+            }
+          ]
+        },
+        {
+          "class": "FOUL",
+          "mean_prediction": 0.17485937772131074,
+          "actual_rate": 0.17179787501045762,
+          "bins": [
+            {
+              "n": 8409,
+              "predicted": 0.042444441232643106,
+              "actual": 0.03222737543108574
+            },
+            {
+              "n": 5394,
+              "predicted": 0.14865618739127717,
+              "actual": 0.146459028550241
+            },
+            {
+              "n": 5214,
+              "predicted": 0.2507834754328388,
+              "actual": 0.2520138089758343
+            },
+            {
+              "n": 4361,
+              "predicted": 0.34162941143838593,
+              "actual": 0.35198349002522356
+            },
+            {
+              "n": 524,
+              "predicted": 0.42352376086269,
+              "actual": 0.37213740458015265
+            },
+            {
+              "n": 4,
+              "predicted": 0.5160369525344021,
+              "actual": 0.5
+            }
+          ]
+        },
+        {
+          "class": "HBP",
+          "mean_prediction": 0.002403461092305774,
+          "actual_rate": 0.0033046097214088515,
+          "bins": [
+            {
+              "n": 23760,
+              "predicted": 0.001150697086188322,
+              "actual": 0.0016835016835016834
+            },
+            {
+              "n": 95,
+              "predicted": 0.1462179750586446,
+              "actual": 0.15789473684210525
+            },
+            {
+              "n": 24,
+              "predicted": 0.24739481600083238,
+              "actual": 0.16666666666666666
+            },
+            {
+              "n": 19,
+              "predicted": 0.33561400341446757,
+              "actual": 0.6842105263157895
+            },
+            {
+              "n": 4,
+              "predicted": 0.44084480443200574,
+              "actual": 1.0
+            },
+            {
+              "n": 3,
+              "predicted": 0.5133362435614673,
+              "actual": 1.0
+            },
+            {
+              "n": 1,
+              "predicted": 0.6083408769487885,
+              "actual": 0.0
+            }
+          ]
+        },
+        {
+          "class": "CONTACT_OUT",
+          "mean_prediction": 0.12768644475859167,
+          "actual_rate": 0.12603530494436543,
+          "bins": [
+            {
+              "n": 11145,
+              "predicted": 0.03776024394480005,
+              "actual": 0.031314490803050696
+            },
+            {
+              "n": 6269,
+              "predicted": 0.14903927340774165,
+              "actual": 0.14866804913064285
+            },
+            {
+              "n": 5214,
+              "predicted": 0.24452018360451327,
+              "actual": 0.2566168009205984
+            },
+            {
+              "n": 1271,
+              "predicted": 0.33009263680094625,
+              "actual": 0.3076317859952793
+            },
+            {
+              "n": 7,
+              "predicted": 0.4044351361469642,
+              "actual": 0.42857142857142855
+            }
+          ]
+        },
+        {
+          "class": "1B",
+          "mean_prediction": 0.047053875749170186,
+          "actual_rate": 0.04864887475947461,
+          "bins": [
+            {
+              "n": 20471,
+              "predicted": 0.033582615714942206,
+              "actual": 0.037614185921547555
+            },
+            {
+              "n": 3424,
+              "predicted": 0.1270633739163231,
+              "actual": 0.11390186915887851
+            },
+            {
+              "n": 11,
+              "predicted": 0.21229409723550344,
+              "actual": 0.2727272727272727
+            }
+          ]
+        },
+        {
+          "class": "2B",
+          "mean_prediction": 0.009462024688075055,
+          "actual_rate": 0.008993558102568393,
+          "bins": [
+            {
+              "n": 23901,
+              "predicted": 0.009439982512130764,
+              "actual": 0.008953600267771223
+            },
+            {
+              "n": 5,
+              "predicted": 0.11482803413696625,
+              "actual": 0.2
+            }
+          ]
+        },
+        {
+          "class": "3B",
+          "mean_prediction": 0.001279849512971255,
+          "actual_rate": 0.0011294235756713795,
+          "bins": [
+            {
+              "n": 23906,
+              "predicted": 0.001279849512971255,
+              "actual": 0.0011294235756713795
+            }
+          ]
+        },
+        {
+          "class": "HR",
+          "mean_prediction": 0.003241678013650697,
+          "actual_rate": 0.0020496946373295406,
+          "bins": [
+            {
+              "n": 23906,
+              "predicted": 0.003241678013650697,
+              "actual": 0.0020496946373295406
+            }
+          ]
+        },
+        {
+          "class": "OTHER",
+          "mean_prediction": 0.009542465144314113,
+          "actual_rate": 0.012005354304358739,
+          "bins": [
+            {
+              "n": 23848,
+              "predicted": 0.009285776895675543,
+              "actual": 0.011782958738678295
+            },
+            {
+              "n": 58,
+              "predicted": 0.11508559192935927,
+              "actual": 0.10344827586206896
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "pitch_probability_difference": {
+    "difference": -0.3948698048566484,
+    "ci95": [
+      -0.40247587259266426,
+      -0.3869323111612997
+    ],
+    "games": 88,
+    "replicates": 2000,
+    "unit": "game cluster, event-weighted"
+  },
+  "run_value_test": {
+    "target": "actual remaining half-inning runs at tracked eligible 0-0 PA starts",
+    "period": "2026-08-23 to 2026-10-06",
+    "metrics": {
+      "RE24": {
+        "n": 6326,
+        "rmse": 0.9084417093900851,
+        "mae": 0.5681595856466541
+      },
+      "count_baseline": {
+        "n": 6326,
+        "rmse": 0.9083378414071897,
+        "mae": 0.5715387518578225
+      },
+      "observed_pitch": {
+        "n": 6326,
+        "rmse": 0.9073700184911265,
+        "mae": 0.570321680314757
+      }
+    },
+    "pitch_vs_count_mse": {
+      "difference": -0.0017572836756855762,
+      "ci95": [
+        -0.0032988971487627424,
+        -0.00023116440379747805
+      ],
+      "games": 88,
+      "replicates": 2000,
+      "unit": "game cluster, event-weighted"
+    },
+    "pitch_vs_RE24_mse": {
+      "difference": -0.001945988902992421,
+      "ci95": [
+        -0.006792791158165763,
+        0.0023906598522750095
+      ],
+      "games": 88,
+      "replicates": 2000,
+      "unit": "game cluster, event-weighted"
+    },
+    "mean_pitcher_runs": 0.0006992605426494827,
+    "value_tables": "TRAIN only; league continuation, no next-batter model in this evaluation"
+  },
+  "largest_observed_shifts": [
+    {
+      "pitch_id": "cpbl:2026-A-286:log:282",
+      "game_id": "2026-A-286",
+      "day": "2026-08-25",
+      "actual_remaining_runs": 1.0,
+      "E0": 0.8123166870741745,
+      "E1": 1.1341425981761095,
+      "pitcher_runs": -0.32182591110193504
+    },
+    {
+      "pitch_id": "cpbl:2026-A-331:log:217",
+      "game_id": "2026-A-331",
+      "day": "2026-09-15",
+      "actual_remaining_runs": 2.0,
+      "E0": 1.1000525905997987,
+      "E1": 1.3871671516219393,
+      "pitcher_runs": -0.2871145610221406
+    },
+    {
+      "pitch_id": "cpbl:2026-A-358:log:386",
+      "game_id": "2026-A-358",
+      "day": "2026-09-28",
+      "actual_remaining_runs": 2.0,
+      "E0": 1.1013966724058857,
+      "E1": 1.3174491511809678,
+      "pitcher_runs": -0.21605247877508216
+    },
+    {
+      "pitch_id": "cpbl:2026-A-285:log:91",
+      "game_id": "2026-A-285",
+      "day": "2026-08-23",
+      "actual_remaining_runs": 0.0,
+      "E0": 0.3969039144771763,
+      "E1": 0.5965338122961458,
+      "pitcher_runs": -0.19962989781896945
+    },
+    {
+      "pitch_id": "cpbl:2026-A-254:log:244",
+      "game_id": "2026-A-254",
+      "day": "2026-09-30",
+      "actual_remaining_runs": 0.0,
+      "E0": 0.8175225303653311,
+      "E1": 1.01504944659929,
+      "pitcher_runs": -0.19752691623395902
+    },
+    {
+      "pitch_id": "cpbl:2026-A-342:log:318",
+      "game_id": "2026-A-342",
+      "day": "2026-09-19",
+      "actual_remaining_runs": 0.0,
+      "E0": 0.8980867478249726,
+      "E1": 1.0802266108373495,
+      "pitcher_runs": -0.18213986301237695
+    },
+    {
+      "pitch_id": "cpbl:2026-A-313:log:124",
+      "game_id": "2026-A-313",
+      "day": "2026-09-06",
+      "actual_remaining_runs": 1.0,
+      "E0": 0.39132032971290925,
+      "E1": 0.5536024468683589,
+      "pitcher_runs": -0.16228211715544966
+    },
+    {
+      "pitch_id": "cpbl:2026-A-306:log:187",
+      "game_id": "2026-A-306",
+      "day": "2026-09-07",
+      "actual_remaining_runs": 0.0,
+      "E0": 1.052538097994531,
+      "E1": 1.2121239313666992,
+      "pitcher_runs": -0.15958583337216825
+    }
+  ],
+  "limitations": [
+    "Refit in a new environment; previous Windows fitted weights unavailable, not claiming exact previous-weight reproduction.",
+    "Reused development test; scheduled date used, resumed-game chronology unaudited.",
+    "PA-start context kept only when matching observable source state; runners are not independently attributed.",
+    "Future pitches use count/context probabilities; no full physical pitch-sequence model.",
+    "Information-stage attribution is predictive, not causal pitcher responsibility.",
+    "Run-value test uses TRAIN league continuation; live next-batter extension is not covered by these scores.",
+    "No held-out recalibration; missingness and TrackMan coverage nonrandom.",
+    "Branch values pool multiple advancement outcomes and can be sparse."
+  ],
+  "checks": {
+    "unique_pitch_ids": true,
+    "disjoint_games": true,
+    "forbidden_features_excluded": true,
+    "max_abs_absorption_mass_error": 9.992007221626409e-16,
+    "all_run_predictions_finite": true
+  },
+  "single_condition_demo": {
+    "source_pitch": "cpbl:2026-A-286:log:282",
+    "batter": "林泓育",
+    "pitcher": "吳俊偉",
+    "outs": 2,
+    "bases": 7,
+    "count": "0-0",
+    "only_changed": "plate_x_m",
+    "rows": [
+      {
+        "x_m": 0.0,
+        "z_m": 1.155033504,
+        "velocity_kph": 123.08594436864,
+        "E0": 0.8123166870741745,
+        "E1": 0.8896447299895154,
+        "pitcher_runs": -0.0773280429153409
+      },
+      {
+        "x_m": 0.798045648,
+        "z_m": 1.155033504,
+        "velocity_kph": 123.08594436864,
+        "E0": 0.8123166870741745,
+        "E1": 1.1341425981761097,
+        "pitcher_runs": -0.32182591110193526
+      }
+    ],
+    "status": "conditional model simulations; source case chosen to illustrate a large shift, not representative or causal evidence"
+  }
+}
