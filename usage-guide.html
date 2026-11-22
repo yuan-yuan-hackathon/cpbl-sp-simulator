@@ -41,7 +41,6 @@
 <tr><td>網站凍結快照</td><td><code>site/</code></td><td>搭配 serve_handoff.py 在本地執行，不是正式網站部署來源。</td></tr>
 <tr><td>訓練與測試工具</td><td><code>work/</code></td><td>validate_pitch_runs.py、package_runtime.py、test_*.py 及 test_runtime.cjs。</td></tr>
 <tr><td>14 頁簡報</td><td><code>docs/</code></td><td>CPBL_SP_Handoff_14_Slides.pptx／.pdf 及報告 DOCX。</td></tr>
-<tr><td>完整交接講稿</td><td><code>CPBL_SP_Full_Handoff_Script.md</code></td><td>較完整的技術解說，請留意文件版本。</td></tr>
 <tr><td>凍結檔案指紋</td><td><code>ASSET_MANIFEST.json</code><br><code>verify_manifest.py</code></td><td>確認下載的凍結資產是否完整。</td></tr>
 </tbody></table></div><p>原專案歷年 ready／audited 資料仍放在模型 repo 根目錄的 <code>data/</code>，不會被此次 2026 引擎快照覆蓋。</p><a class="back" href="#top">回到頁首 ↑</a></section>
 <section id="local"><h2><span class="num">05 / LOCAL USE</span>下載後如何在電腦使用</h2><h3>1. 取得完整專案</h3><p>以有存取權的帳號開啟模型 repo，使用 Git clone，或在 GitHub 點 <strong>Code → Download ZIP</strong> 後解壓。終端機切到 repo 根目錄，再進入集中引擎：</p><pre><code>cd models/integration/sp_engine</code></pre><h3>2. 先跑一個結果</h3><p>建議 Python 3.12。以下凍結推論只使用 Python 標準函式庫，不需先安裝訓練套件或解壓原始資料：</p><pre><code>python trace_model.py --mode legacy
