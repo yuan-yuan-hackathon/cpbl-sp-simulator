@@ -24,11 +24,12 @@ function v06Absorb(q,t,b,s,loop=false){
 function v06Count(q){const t=Array.from({length:4},()=>Array.from({length:3},()=>Array(8).fill(0)));for(let b=3;b>=0;b--)for(let s=2;s>=0;s--)t[b][s]=v06Absorb(q[b][s],t,b,s,true);return t;}
 function v06Infer(bundle,x,batterId,pitcherId,balls,strikes){
  const id=v=>String(v).replace(/^cpbl:/,'').replace(/^0+/,'')||'0',profiles=bundle.profiles;
- const bat=profiles.batters[id(batterId)],pit=profiles.pitchers[id(pitcherId)],bh=bat||profiles.batter_prior,ph=pit||profiles.pitcher_prior;
+ // Use the same training-period league batter profile for every current batter.
+ const pit=profiles.pitchers[id(pitcherId)],bh=profiles.batter_prior,ph=pit||profiles.pitcher_prior;
  const input={...x};['history_exit','history_angle','history_direction','history_n'].forEach((k,i)=>input[k]=bh[i]);bundle.baseline.classes.forEach((k,i)=>input['pitcher_rate_'+k]=ph[i]);
  const q=Array.from({length:4},(_,b)=>Array.from({length:3},(_,s)=>v06Probs(bundle.baseline,{...input,balls_before:b,strikes_before:s}))),future=v06Count(q);
  const now=v06Probs(bundle.pitch,{...input,balls_before:balls,strikes_before:strikes});
- return {before:future[balls][strikes],after:v06Absorb(now,future,balls,strikes),batterFallback:!bat,pitcherFallback:!pit};
+ return {before:future[balls][strikes],after:v06Absorb(now,future,balls,strikes),batterFallback:false,batterBaseline:"league_average",pitcherFallback:!pit};
 }
 async function v06Download(path,hash){
  const r=await fetch(path);if(!r.ok)throw Error('無法下載模型');const data=await r.arrayBuffer();
