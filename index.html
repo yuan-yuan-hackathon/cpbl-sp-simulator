@@ -291,14 +291,16 @@ rosterNote.hidden=basePlayers.length===0;
 rosterNote.textContent=basePlayers.length?'缺少個人模型資料：'+basePlayers.join('、')+'。此情境使用對應角色的模型平均能力，不代表個人預測。':'';
 const outs=+$('outs').value,bases=($('base1').checked?1:0)+($('base2').checked?2:0)+($('base3').checked?4:0),s=8*outs+bases;
 const x=+$('x').value,z=+$('z').value,loc=locationCell(x,z);$('coords').textContent=`x = ${x.toFixed(2)} m, z = ${z.toFixed(2)} m`;$('dot').style.left=((x+.8)/1.6*100)+'%';$('dot').style.top=((1.6-z)/1.6*100)+'%';
-const qLegacy=locationProbs(probs(b,p,s),loc.hit_rate),nextValue=continuation(next,p,model.states),key=$('result').value,k=model.classes.indexOf(key);
-let q=qLegacy,qBefore=probs(b,p,s),inference=null;
+// Batter-side and event expectation: league-average current batter, actual pitcher (next batter stays actual).
+const leagueBatter={rates:model.center.slice(0,4)};
+const qLegacy=locationProbs(probs(leagueBatter,p,s),loc.hit_rate),nextValue=continuation(next,p,model.states),key=$('result').value,k=model.classes.indexOf(key);
+let q=qLegacy,qBefore=probs(leagueBatter,p,s),inference=null;
 // Pitcher-side expectation: actual current batter, league-average pitcher.
 const leaguePitcher={rates:model.center.slice(4,8)};let qBeforeP=probs(b,leaguePitcher,s),qP=locationProbs(qBeforeP,loc.hit_rate);
 const useNew=$('runs-mode').value==='v06'&&!!runsBundle;
 if(useNew){const runsInput={pa_outs_before_audited:outs,pa_bases_before_audited:bases,plate_x_m:x,plate_z_m:z,velocity_kph:numericInput('pitch-velocity'),spin_rpm:numericInput('pitch-spin'),release_height_m:null,release_side_m:null,extension_m:null};inference=v06Infer(runsBundle,runsInput,b.id,p.id,+$('balls').value,+$('strikes').value);q=inference.after;qBefore=inference.before;
  const pn=v06InferPitcherNeutral(runsBundle,runsInput,b.id,+$('balls').value,+$('strikes').value);qBeforeP=pn.before;qP=pn.after;}
-$('runs-status').textContent=useNew?'目前使用 v0.6：本棒打者統一採聯盟平均基準；球位、球數、投手與下一棒仍影響情境價值。'+(inference.pitcherFallback?' 部分球員缺少6月底歷史，使用訓練期先驗。':''):$('runs-mode').value==='legacy'?'目前使用 v0.4 保留版：僅做進壘位置修正。':runsLoadError?'v0.6 載入失敗，已回退 v0.4：'+runsLoadError:'v0.6 載入中，暫用 v0.4。';
+$('runs-status').textContent=useNew?'目前使用 v0.6：本棒打者統一採聯盟平均基準；球位、球數、投手與下一棒仍影響情境價值。'+(inference.pitcherFallback?' 部分球員缺少6月底歷史，使用訓練期先驗。':''):$('runs-mode').value==='legacy'?'目前使用 v0.4 保留版：僅做進壘位置修正；本棒打者同樣採聯盟平均基準。':runsLoadError?'v0.6 載入失敗，已回退 v0.4：'+runsLoadError:'v0.6 載入中，暫用 v0.4。';
 const branch=model.classes.map((_,j)=>useNew&&!model.allowed[s][j]?runsBundle.value_tables.values[s][j]:model.runs[s][j]+model.transitions[s][j].reduce((a,t,i)=>a+t*(nextValue[i]||0),0));
 const exp=q.reduce((a,t,j)=>a+t*branch[j],0),value=branch[k],actual=model.runs[s][k],after=value-actual;
 const reEvent=actual+model.transitions[s][k].reduce((a,t,i)=>a+t*(model.states[i]||0),0)-model.states[s];
